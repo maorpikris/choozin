@@ -4,7 +4,10 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="blueGrey">#ACB7D7</color>
-    <color name="white">#FFFFFF</color>
-    <color name="gold">#FFC371</color>
+    <color name="gold">#FF9E71</color>
     <color name="red">#FF5F6D</color>
+    <color name="white">#FFFFFF</color>
+    <color name="darkGold">#D6855E</color>
+    <color name="darkRed">#CA4A56</color>
+
 </resources>
