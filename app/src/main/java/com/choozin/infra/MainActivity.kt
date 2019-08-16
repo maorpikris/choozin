@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
+import com.choozin.CreatePostFragment
 import com.choozin.infra.fragments.HomeFragment
 import com.choozin.infra.fragments.ProfileFragment
 import com.choozin.infra.fragments.SearchFragment
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_add -> {
-
+                addFragment(CreatePostFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_profile -> {

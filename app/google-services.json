@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "806385898368",
+    "firebase_url": "https://choozin-14cd7.firebaseio.com",
+    "project_id": "choozin-14cd7",
+    "storage_bucket": "choozin-14cd7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:806385898368:android:8d6e2378705715ed",
+        "android_client_info": {
+          "package_name": "com.choozin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "806385898368-eqb5cnip7lndjdf2fptk0gddhgvolqs9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.choozin",
+            "certificate_hash": "13d3bee3a12cca2855dc9584055027c81fe17767"
+          }
+        },
+        {
+          "client_id": "806385898368-l48d9a1lf81gkni004cbadpf9t4oqreg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoBXM4F4R2dJ7PDB8VIcilATv7JmblsGY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "806385898368-l48d9a1lf81gkni004cbadpf9t4oqreg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
