@@ -1,14 +1,14 @@
 package com.choozin.infra
 
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.appcompat.app.AppCompatActivity
 import com.choozin.R
 import kotlinx.android.synthetic.main.activity_main.*
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
-import com.choozin.CreatePostFragment
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import com.choozin.infra.fragments.CreatePostFragment
 import com.choozin.infra.fragments.HomeFragment
 import com.choozin.infra.fragments.ProfileFragment
 import com.choozin.infra.fragments.SearchFragment
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        setSupportActionBar(toolbar as android.support.v7.widget.Toolbar)
+        setSupportActionBar(toolbar as androidx.appcompat.widget.Toolbar)
         supportActionBar?.title = "Choozin"
             fragmentManager = supportFragmentManager
         addFragment(HomeFragment())
