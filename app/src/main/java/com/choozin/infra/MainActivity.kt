@@ -1,6 +1,7 @@
 package com.choozin.infra
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import com.choozin.R
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     }
     lateinit var fragmentManager: FragmentManager
 
-        override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -48,11 +49,11 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar as androidx.appcompat.widget.Toolbar)
         supportActionBar?.title = "Choozin"
             fragmentManager = supportFragmentManager
-        addFragment(HomeFragment())
+        addFragment(ProfileFragment())
     }
 
     private fun addFragment(fragment: Fragment) {
-
+        Log.i("dab", fragment.tag);
         val fragmentTransaction : FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container, fragment)
         fragmentTransaction.commit()

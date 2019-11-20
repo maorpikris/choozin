@@ -21,16 +21,17 @@ class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(authManager.isLoggedIn) {
-            if(authManager.haveFinishedRegister(this)) {
-            } else {
-                val intent = Intent(this, AfterRegisterActivity::class.java)
-                startActivity(intent)
-                this.finish()
-            }
-        } else {
-            setContentView(R.layout.activity_login)
-        }
+//        if(authManager.isLoggedIn) {
+//            if(authManager.haveFinishedRegister(this)) {
+//            } else {
+//                val intent = Intent(this, AfterRegisterActivity::class.java)
+//                startActivity(intent)
+//                this.finish()
+//            }
+//        } else {
+//            setContentView(R.layout.activity_login)
+//        }
+        setContentView(R.layout.activity_main);
 
     }
 

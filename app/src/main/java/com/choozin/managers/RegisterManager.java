@@ -31,7 +31,7 @@ public class RegisterManager extends BaseManager {
     public void signUp(Task<AuthResult> task, Context context) {
         if(task.isSuccessful()) {
             authenticationManager.user = task.getResult().getUser();
-            FirebaseFirestore.getInstance().collection("Users").document(authenticationManager.user.getUid()).set();
+            //FirebaseFirestore.getInstance().collection("Users").document(authenticationManager.user.getUid()).set();
         }else {
             Log.v("dab", task.getException().toString());
         }
