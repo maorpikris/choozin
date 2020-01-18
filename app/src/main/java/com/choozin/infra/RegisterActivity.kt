@@ -1,15 +1,12 @@
 package com.choozin.infra
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.choozin.R
 import com.choozin.infra.base.BaseActivity
 import com.choozin.managers.AuthenticationManager
 import com.choozin.managers.RegisterManager
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : BaseActivity() {
@@ -20,6 +17,7 @@ class RegisterActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+        this.upadteUI()
     }
 
     fun backButtonClicked(view : View) {
@@ -27,31 +25,54 @@ class RegisterActivity : BaseActivity() {
     }
 
     fun registerButtonClicked(view: View) {
-
         if(checkValidation()) {
             Thread {
-                mAuth.createUserWithEmailAndPassword(emailField.toString(), passwordField.toString()).addOnCompleteListener {task ->
-
-                }
+                registerManager.signUp(
+                    emailField.text.toString(),
+                    passwordField.text.toString(),
+                    usernameField.text.toString(),
+                    this
+                )
             }
-
         }
     }
 
+    fun upadteUI() {
+        postOnUI(Runnable {
+            when (registerManager.registerState) {
+                RegisterManager.RegisterState.INIT -> {
+                    registerProgressBar.visibility = View.INVISIBLE
+                }
+                RegisterManager.RegisterState.LOADING -> {
+                    registerProgressBar.visibility = View.VISIBLE
+                }
+                RegisterManager.RegisterState.VALID -> {
+                    registerManager.setBackToInit(this)
+                    // Go to another screen
+                }
+                RegisterManager.RegisterState.UNVALID -> {
+                    registerManager.setBackToInit(this)
+                    Toast.makeText(this, "Email or Username are taken.", Toast.LENGTH_LONG)
+                }
+            }
+
+        })
+    }
+
     private fun checkValidation() : Boolean {
-        var result = true;
-        registerManager.validateFields(emailField.toString(), passwordField.toString())
+        var result = true
+        registerManager.validateFields(emailField.text.toString(), passwordField.text.toString())
         when(registerManager.emailState.isValid) {
             false -> {
-                email_login.error = registerManager.emailState.message
-                email_login.requestFocus()
+                emailField.error = registerManager.emailState.message
+                emailField.requestFocus()
                 result = false
             }
         }
         when(registerManager.passwordState.isValid) {
             false -> {
-                password_login.error = registerManager.passwordState.message
-                password_login.requestFocus()
+                passwordField.error = registerManager.passwordState.message
+                passwordField.requestFocus()
                 result = false
             }
         }
