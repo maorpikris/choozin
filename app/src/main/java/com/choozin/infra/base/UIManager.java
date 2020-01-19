@@ -7,7 +7,7 @@ import java.lang.ref.WeakReference;
 public class UIManager extends BaseManager {
 
 
-    public static UIManager instance;
+    private static UIManager instance;
     public static UIManager getInstance(){
         if (instance == null)
             instance = new UIManager();
@@ -17,7 +17,7 @@ public class UIManager extends BaseManager {
 
     private static WeakReference<BaseActivity> foregroundActivity;
 
-    public static void setActivity(BaseActivity activity) {
+    public void setActivity(BaseActivity activity) {
         foregroundActivity = new WeakReference<>(activity);
     }
 
