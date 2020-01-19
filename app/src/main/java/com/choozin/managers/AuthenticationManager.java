@@ -2,7 +2,7 @@ package com.choozin.managers;
 
 import android.content.Context;
 
-import com.choozin.managers.base.BaseManager;
+import com.choozin.infra.base.BaseManager;
 
 
 public class AuthenticationManager extends BaseManager {

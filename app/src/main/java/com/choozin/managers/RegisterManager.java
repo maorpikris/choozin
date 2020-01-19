@@ -3,7 +3,7 @@ package com.choozin.managers;
 import android.util.Log;
 
 import com.choozin.infra.RegisterActivity;
-import com.choozin.managers.base.BaseManager;
+import com.choozin.infra.base.BaseManager;
 import com.choozin.models.User;
 import com.choozin.utils.FieldValidationState;
 import com.google.gson.JsonObject;

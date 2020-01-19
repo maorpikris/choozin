@@ -7,7 +7,7 @@ import com.choozin.R
 import com.choozin.infra.base.BaseActivity
 import com.choozin.managers.AuthenticationManager
 import com.choozin.managers.RegisterManager
-import com.choozin.managers.base.BaseManager
+import com.choozin.infra.base.BaseManager
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : BaseActivity() {
@@ -19,11 +19,6 @@ class RegisterActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         this.upadteUI()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        BaseManager.setActivity(this);
     }
 
     fun backButtonClicked(view : View) {

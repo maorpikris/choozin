@@ -1,4 +1,4 @@
-package com.choozin.managers.base;
+package com.choozin.infra.base;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -35,18 +35,9 @@ public class BaseManager {
         }
     }
 
-    private static WeakReference<BaseActivity> currentActivity;
-
-    public static void setActivity(BaseActivity activity) {
-        currentActivity = new WeakReference<>(activity);
+    protected void dispatchUpdateUI(){
+        UIManager.instance.dispatchUpdateUI();
     }
-
-    protected void dispatchUpdateUI() {
-        if (currentActivity != null) {
-            currentActivity.get().updateUI();
-        }
-    }
-
     protected SharedPreferences getSharedPrefs(Context context) {
         return context.getSharedPreferences("main", 0);
     }
