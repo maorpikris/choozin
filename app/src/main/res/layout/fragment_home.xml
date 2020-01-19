@@ -3,10 +3,11 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context=".infra.fragments.HomeFragment">
+        tools:context=".infra.fragments.HomeFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <include
+            android:id="@+id/news_title"
+            layout="@layout/post_item"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
+            android:layout_height="match_parent" />
 </FrameLayout>

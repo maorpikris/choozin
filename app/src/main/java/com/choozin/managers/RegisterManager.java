@@ -38,7 +38,7 @@ public class RegisterManager extends BaseManager {
 
     public void signUp(String email, String password, String username, RegisterActivity activity) {
         registerState = RegisterState.LOADING;
-        activity.upadteUI();
+        dispatchUpdateUI();
         User user = new User(email, password, username);
         String userJson = gson.toJson(user);
         RequestBody requestBody = RequestBody.create(JSON, userJson);
@@ -49,7 +49,7 @@ public class RegisterManager extends BaseManager {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 e.printStackTrace();
                 registerState = RegisterState.UNVALID;
-                activity.upadteUI();
+                dispatchUpdateUI();
                 Log.v("dab", e.getMessage());
             }
 
@@ -57,12 +57,12 @@ public class RegisterManager extends BaseManager {
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if (gson.fromJson(response.body().string(), JsonObject.class).has("message")) {
                     registerState = RegisterState.UNVALID;
-                    activity.upadteUI();
+                    dispatchUpdateUI();
                     return;
                 }
                 Log.v("dab", response.body().string());
                 registerState = RegisterState.VALID;
-                activity.upadteUI();
+                dispatchUpdateUI();
 
             }
         });
@@ -71,7 +71,7 @@ public class RegisterManager extends BaseManager {
     public void setBackToInit(RegisterActivity activity) {
 
         registerState = RegisterState.INIT;
-        activity.upadteUI();
+        dispatchUpdateUI();
 
     }
 

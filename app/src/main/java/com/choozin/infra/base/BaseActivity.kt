@@ -9,6 +9,7 @@ import android.widget.Toast
 
 open class BaseActivity : Activity() {
 
+    fun updateUI() {}
 
     fun postOnUI(runnable: Runnable) {
             Handler(Looper.getMainLooper()).post(runnable)
