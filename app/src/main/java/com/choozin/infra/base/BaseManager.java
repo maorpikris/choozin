@@ -36,7 +36,7 @@ public class BaseManager {
     }
 
     protected void dispatchUpdateUI(){
-        UIManager.instance.dispatchUpdateUI();
+        UIManager.getInstance().dispatchUpdateUI();
     }
     protected SharedPreferences getSharedPrefs(Context context) {
         return context.getSharedPreferences("main", 0);
