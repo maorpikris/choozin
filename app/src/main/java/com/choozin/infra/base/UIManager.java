@@ -1,13 +1,11 @@
 package com.choozin.infra.base;
 
-import com.choozin.infra.base.BaseManager;
-
 import java.lang.ref.WeakReference;
 
 public class UIManager extends BaseManager {
 
-
     private static UIManager instance;
+
     public static UIManager getInstance(){
         if (instance == null)
             instance = new UIManager();
@@ -21,11 +19,9 @@ public class UIManager extends BaseManager {
         foregroundActivity = new WeakReference<>(activity);
     }
 
-    protected void dispatchUpdateUI() {
+    public void dispatchUpdateUI() {
         if (foregroundActivity != null && foregroundActivity.get() != null) {
             foregroundActivity.get().updateUI();
         }
     }
-
-
 }

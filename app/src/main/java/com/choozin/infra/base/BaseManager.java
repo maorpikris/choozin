@@ -4,10 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Patterns;
 
-import com.choozin.infra.base.BaseActivity;
 import com.google.gson.Gson;
-
-import java.lang.ref.WeakReference;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -22,7 +19,7 @@ public class BaseManager {
             = MediaType.parse("application/json; charset=utf-8");
     protected Gson gson = new Gson();
     protected OkHttpClient okHttpClient = new OkHttpClient();
-    private String baseUrl = "http://192.168.1.32:8080/";
+    private String baseUrl = "http://choozinserver-git-choozinapi.apps.us-east-2.starter.openshift-online.com/";
 
     protected Request.Builder createRequestBuilder(String url, String o, RequestBody requestBody) {
         switch (o) {
@@ -33,10 +30,6 @@ public class BaseManager {
             default:
                 return null;
         }
-    }
-
-    protected void dispatchUpdateUI(){
-        UIManager.getInstance().dispatchUpdateUI();
     }
     protected SharedPreferences getSharedPrefs(Context context) {
         return context.getSharedPreferences("main", 0);

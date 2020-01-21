@@ -9,10 +9,10 @@ import android.widget.Toast
 
 open class BaseActivity : Activity() {
 
-    fun updateUI() {}
+    open fun updateUI() {}
 
     fun postOnUI(runnable: Runnable) {
-            Handler(Looper.getMainLooper()).post(runnable)
+        Handler(Looper.getMainLooper()).post(runnable)
     }
 
     fun showToast(text : CharSequence, duration:Int) {

@@ -1,12 +1,11 @@
 package com.choozin.managers;
 
-import android.util.Log;
 
 import com.choozin.infra.RegisterActivity;
 import com.choozin.infra.base.BaseManager;
+import com.choozin.infra.base.UIManager;
 import com.choozin.models.User;
 import com.choozin.utils.FieldValidationState;
-import com.google.gson.JsonObject;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -31,14 +30,13 @@ public class RegisterManager extends BaseManager {
         return instance;
     }
 
-    private AuthenticationManager authenticationManager = AuthenticationManager.getInstance();
     public FieldValidationState usernameState;
     public FieldValidationState emailState;
     public FieldValidationState passwordState;
 
     public void signUp(String email, String password, String username, RegisterActivity activity) {
         registerState = RegisterState.LOADING;
-        dispatchUpdateUI();
+        UIManager.getInstance().dispatchUpdateUI();
         User user = new User(email, password, username);
         String userJson = gson.toJson(user);
         RequestBody requestBody = RequestBody.create(JSON, userJson);
@@ -48,41 +46,30 @@ public class RegisterManager extends BaseManager {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 e.printStackTrace();
-                registerState = RegisterState.UNVALID;
-                dispatchUpdateUI();
-                Log.v("dab", e.getMessage());
+                registerState = RegisterState.FAILED_CONNECTION;
+                UIManager.getInstance().dispatchUpdateUI();
             }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                if (gson.fromJson(response.body().string(), JsonObject.class).has("message")) {
-                    registerState = RegisterState.UNVALID;
-                    dispatchUpdateUI();
+                if (response.body().string().contains("User created")) {
+                    registerState = RegisterState.VALID;
+                    UIManager.getInstance().dispatchUpdateUI();
                     return;
                 }
-                Log.v("dab", response.body().string());
-                registerState = RegisterState.VALID;
-                dispatchUpdateUI();
-
+                registerState = RegisterState.UNVALID;
+                UIManager.getInstance().dispatchUpdateUI();
+                //TODO: Check whether email, username or both are taken.
             }
         });
     }
 
-    public void setBackToInit(RegisterActivity activity) {
-
+    public void setBackToInit() {
         registerState = RegisterState.INIT;
-        dispatchUpdateUI();
-
+        UIManager.getInstance().dispatchUpdateUI();
     }
 
-    public enum RegisterState {
-        INIT,
-        LOADING,
-        VALID,
-        UNVALID
-    }
-
-    public void validateFields(String email, String password) {
+    public void validateFields(String email, String password, String username) {
             if(email.equals("")) {
                 emailState = new FieldValidationState(false, "Please enter an email");
             } else if(!isEmailValid(email)) {
@@ -97,6 +84,18 @@ public class RegisterManager extends BaseManager {
             } else {
                 passwordState = new FieldValidationState(true, "");
             }
+        if (username.equals("")) {
+            usernameState = new FieldValidationState(false, "Please enter a username");
+        } else {
+            usernameState = new FieldValidationState(true, "");
+        }
     }
 
+    public enum RegisterState {
+        INIT,
+        LOADING,
+        VALID,
+        UNVALID,
+        FAILED_CONNECTION
+    }
 }

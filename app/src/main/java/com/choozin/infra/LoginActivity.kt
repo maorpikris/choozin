@@ -3,6 +3,7 @@ package com.choozin.infra
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.choozin.R
 import com.choozin.infra.base.BaseActivity
 
 
@@ -13,6 +14,7 @@ class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_login)
 //        if(authManager.isLoggedIn) {
 //            if(authManager.haveFinishedRegister(this)) {
 //            } else {
@@ -23,9 +25,7 @@ class LoginActivity : BaseActivity() {
 //        } else {
 //            setContentView(R.layout.activity_login)
 //        }
-        val intent = Intent(this, RegisterActivity::class.java)
-        startActivity(intent)
-        this.finish()
+
 
     }
 

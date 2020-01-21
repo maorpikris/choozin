@@ -5,20 +5,17 @@ import android.view.View
 import android.widget.Toast
 import com.choozin.R
 import com.choozin.infra.base.BaseActivity
-import com.choozin.managers.AuthenticationManager
 import com.choozin.managers.RegisterManager
-import com.choozin.infra.base.BaseManager
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : BaseActivity() {
 
-    val authManager : AuthenticationManager = AuthenticationManager.getInstance()
-    val registerManager : RegisterManager = RegisterManager.getInstance()
+    private val registerManager: RegisterManager = RegisterManager.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        this.upadteUI()
+        this.updateUI()
     }
 
     fun backButtonClicked(view : View) {
@@ -34,11 +31,11 @@ class RegisterActivity : BaseActivity() {
                     usernameField.text.toString(),
                     this
                 )
-            }
+            }.start()
         }
     }
 
-    fun upadteUI() {
+    override fun updateUI() {
         postOnUI(Runnable {
             when (registerManager.registerState) {
                 RegisterManager.RegisterState.INIT -> {
@@ -48,12 +45,17 @@ class RegisterActivity : BaseActivity() {
                     registerProgressBar.visibility = View.VISIBLE
                 }
                 RegisterManager.RegisterState.VALID -> {
-                    registerManager.setBackToInit(this)
-                    // Go to another screen
+                    registerManager.setBackToInit()
+                    showToast("User created successfully!", Toast.LENGTH_LONG)
+                    super.onBackPressed()
                 }
                 RegisterManager.RegisterState.UNVALID -> {
-                    registerManager.setBackToInit(this)
-                    Toast.makeText(this, "Email or Username are taken.", Toast.LENGTH_LONG)
+                    registerManager.setBackToInit()
+                    showToast("Email or Username are taken.")
+                }
+                RegisterManager.RegisterState.FAILED_CONNECTION -> {
+                    registerManager.setBackToInit()
+                    showToast("Failed to connect.")
                 }
             }
 
@@ -62,11 +64,22 @@ class RegisterActivity : BaseActivity() {
 
     private fun checkValidation() : Boolean {
         var result = true
-        registerManager.validateFields(emailField.text.toString(), passwordField.text.toString())
+        registerManager.validateFields(
+            emailField.text.toString(),
+            passwordField.text.toString(),
+            usernameField.text.toString()
+        )
         when(registerManager.emailState.isValid) {
             false -> {
                 emailField.error = registerManager.emailState.message
                 emailField.requestFocus()
+                result = false
+            }
+        }
+        when (registerManager.usernameState.isValid) {
+            false -> {
+                usernameField.error = registerManager.usernameState.message
+                usernameField.requestFocus()
                 result = false
             }
         }

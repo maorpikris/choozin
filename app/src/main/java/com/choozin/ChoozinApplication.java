@@ -32,10 +32,10 @@ public class ChoozinApplication extends Application implements Application.Activ
 
     @Override
     public void onActivityResumed(@NonNull Activity activity) {
-        if (activity instanceof BaseActivity){
-            UIManager.getInstance().setActivity((BaseActivity)activity);
-        }else{
-            Log.w(getClass().getSimpleName(),"Resumed non-base activity : "+activity.getClass().getSimpleName());
+        if (activity instanceof BaseActivity) {
+            UIManager.getInstance().setActivity((BaseActivity) activity);
+        } else {
+            Log.w(getClass().getSimpleName(), "Resumed non-base activity : " + activity.getClass().getSimpleName());
         }
     }
 
