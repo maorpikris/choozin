@@ -2,7 +2,6 @@ package com.choozin.infra
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import com.choozin.R
 import com.choozin.infra.base.BaseActivity
 import com.choozin.managers.RegisterManager
@@ -24,14 +23,14 @@ class RegisterActivity : BaseActivity() {
 
     fun registerButtonClicked(view: View) {
         if(checkValidation()) {
-            Thread {
+            postOnSecondary(Runnable {
                 registerManager.signUp(
                     emailField.text.toString(),
                     passwordField.text.toString(),
                     usernameField.text.toString(),
                     this
                 )
-            }.start()
+            })
         }
     }
 
@@ -46,7 +45,7 @@ class RegisterActivity : BaseActivity() {
                 }
                 RegisterManager.RegisterState.VALID -> {
                     registerManager.setBackToInit()
-                    showToast("User created successfully!", Toast.LENGTH_LONG)
+                    showToast("User created successfully!")
                     super.onBackPressed()
                 }
                 RegisterManager.RegisterState.UNVALID -> {

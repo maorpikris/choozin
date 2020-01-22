@@ -1,9 +1,9 @@
 package com.choozin.infra.base;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Patterns;
 
+import com.choozin.ChoozinApplication;
 import com.google.gson.Gson;
 
 import okhttp3.MediaType;
@@ -31,8 +31,9 @@ public class BaseManager {
                 return null;
         }
     }
-    protected SharedPreferences getSharedPrefs(Context context) {
-        return context.getSharedPreferences("main", 0);
+
+    protected SharedPreferences getSharedPrefs() {
+        return ChoozinApplication.getAppContext().getSharedPreferences("main", 0);
     }
 
     protected boolean isEmailValid(String email) {

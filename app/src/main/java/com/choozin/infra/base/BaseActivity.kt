@@ -1,10 +1,9 @@
 package com.choozin.infra.base
 
 import android.app.Activity
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.widget.Toast
+import com.choozin.managers.ThreadsManager
 
 
 open class BaseActivity : Activity() {
@@ -12,7 +11,11 @@ open class BaseActivity : Activity() {
     open fun updateUI() {}
 
     fun postOnUI(runnable: Runnable) {
-        Handler(Looper.getMainLooper()).post(runnable)
+        ThreadsManager.getInstance().getDefaultHandler("main").post(runnable)
+    }
+
+    fun postOnSecondary(runnable: Runnable) {
+        ThreadsManager.getInstance().getDefaultHandler("secondary").post(runnable)
     }
 
     fun showToast(text : CharSequence, duration:Int) {
@@ -25,6 +28,5 @@ open class BaseActivity : Activity() {
     fun logVerbose(message: String) {
         Log.v("dab", message)
     }
-
 
 }

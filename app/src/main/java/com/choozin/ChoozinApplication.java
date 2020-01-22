@@ -2,6 +2,7 @@ package com.choozin;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -13,11 +14,10 @@ import com.choozin.infra.base.UIManager;
 
 public class ChoozinApplication extends Application implements Application.ActivityLifecycleCallbacks {
 
+    private static Context context;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        registerActivityLifecycleCallbacks(this);
+    public static Context getAppContext() {
+        return ChoozinApplication.context;
     }
 
     @Override
@@ -57,5 +57,12 @@ public class ChoozinApplication extends Application implements Application.Activ
     @Override
     public void onActivityDestroyed(@NonNull Activity activity) {
 
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        registerActivityLifecycleCallbacks(this);
+        ChoozinApplication.context = getApplicationContext();
     }
 }
