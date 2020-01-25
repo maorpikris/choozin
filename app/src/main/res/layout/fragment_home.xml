@@ -5,9 +5,7 @@
              android:layout_height="match_parent"
         tools:context=".infra.fragments.HomeFragment">
 
-    <include
-            android:id="@+id/news_title"
-            layout="@layout/post_item"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </FrameLayout>

@@ -6,6 +6,8 @@ import com.choozin.models.User;
 import com.choozin.utils.FieldValidationState;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -17,6 +19,8 @@ import okhttp3.Response;
 
 
 public class AuthenticationManager extends BaseManager {
+
+    public String currentUserToken = null;
 
     public FieldValidationState emailState;
 
@@ -34,7 +38,11 @@ public class AuthenticationManager extends BaseManager {
 
     public boolean isLoggedIn()
     {
-        return getSharedPrefs().getString("token", null) != null;
+        if (getSharedPrefs().getString("token", null) != null) {
+            currentUserToken = getSharedPrefs().getString("token", null);
+            return true;
+        }
+        return false;
     }
 
     public void logInWithEmailAndPassword(String email, String password) {
@@ -54,11 +62,20 @@ public class AuthenticationManager extends BaseManager {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
                 if (response.isSuccessful()) {
-                    // TODO: Save token to sharedPrefs
-                    loginScreenState = LoginScreenState.AUTH;
-                    UIManager.getInstance().dispatchUpdateUI();
-                    return;
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        setToken(jsonObject.getString("token"));
+                        loginScreenState = LoginScreenState.AUTH;
+                        UIManager.getInstance().dispatchUpdateUI();
+                        return;
+                    } catch (JSONException e) {
+                        loginScreenState = LoginScreenState.FAILED_CONNECT;
+                        UIManager.getInstance().dispatchUpdateUI();
+                        e.printStackTrace();
+                    }
+
                 }
                 loginScreenState = LoginScreenState.FAILED_AUTH;
                 UIManager.getInstance().dispatchUpdateUI();
@@ -89,7 +106,13 @@ public class AuthenticationManager extends BaseManager {
     }
 
     public void setToken(String token) {
-        getSharedPrefs().edit().putString("token", token);
+        getSharedPrefs().edit().putString("token", token).apply();
+        currentUserToken = token;
+    }
+
+    public void clearToken() {
+        getSharedPrefs().edit().putString("token", null).apply();
+        currentUserToken = null;
     }
 
     public enum LoginScreenState {

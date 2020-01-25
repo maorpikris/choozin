@@ -15,20 +15,14 @@ class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-
-//        if(authManager.isLoggedIn) {
-//            if(authManager.haveFinishedRegister(this)) {
-//            } else {
-//                val intent = Intent(this, AfterRegisterActivity::class.java)
-//                startActivity(intent)
-//                this.finish()
-//            }
-//        } else {
-//            setContentView(R.layout.activity_login)
-//        }
-
-
+        authManager.clearToken()
+        if (authManager.isLoggedIn) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            this.finish()
+        } else {
+            setContentView(R.layout.activity_login)
+        }
     }
 
     fun loginButtonClicked(view: View) {
@@ -54,6 +48,9 @@ class LoginActivity : BaseActivity() {
                 AuthenticationManager.LoginScreenState.AUTH -> {
                     authManager.setBackToInit()
                     showToast("User logged in")
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    this.finish()
                 }
                 AuthenticationManager.LoginScreenState.FAILED_AUTH -> {
                     authManager.setBackToInit()
