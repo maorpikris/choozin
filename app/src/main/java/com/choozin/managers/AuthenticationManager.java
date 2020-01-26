@@ -21,6 +21,7 @@ import okhttp3.Response;
 public class AuthenticationManager extends BaseManager {
 
     public String currentUserToken = null;
+    public User currentUser;
 
     public FieldValidationState emailState;
 
@@ -34,7 +35,6 @@ public class AuthenticationManager extends BaseManager {
 
     public FieldValidationState passwordState;
     public LoginScreenState loginScreenState;
-    private String token = null;
 
     public boolean isLoggedIn()
     {
