@@ -1,11 +1,11 @@
-package com.choozin.infra.fragments
+package com.choozin.ui.fragments
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.choozin.R
 
 class SearchFragment : Fragment() {

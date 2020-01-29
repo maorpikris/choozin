@@ -1,4 +1,4 @@
-package com.choozin.helpers
+package com.choozin.infra.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -29,10 +29,10 @@ class HomeAdapter(val posts: List<PostItem>) : RecyclerView.Adapter<HomeAdapter.
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun setData(post: PostItem?, pos: Int) {
             itemView.post_username.text = post!!.creator.username
-            itemView.postTitle.text = post.title
+            itemView.title_preview.text = post.title
             itemView.post_desc.text = post.creator.description
             if (AuthenticationManager.getInstance().currentUser.favorites.contains(post.postId)) {
-                +
+
             }
         }
     }

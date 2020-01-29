@@ -4,70 +4,150 @@
                                                    xmlns:tools="http://schemas.android.com/tools"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
-                                                   tools:context=".infra.fragments.CreatePostFragment" android:id="@+id/frameLayout"
+    android:id="@+id/frameLayout"
+    tools:context=".ui.fragments.CreatePostFragment"
                                                    android:padding="0dp">
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/vbbdsfb"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/constraintLayout"
-    >
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-                android:layout_width="0dp"
-                android:layout_height="55dp"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/editText6"
-                android:background="@drawable/edit_text_round"
-                android:hint="Add a title to your post."
-                android:paddingStart="14dp" android:paddingEnd="14dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="16dp"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginBottom="16dp"
-                app:layout_constraintBottom_toTopOf="@+id/button6"/>
-        <Button
-                android:text="Publish"
-                android:layout_width="wrap_content"
-                android:layout_height="55dp"
-                android:id="@+id/button6"
-                android:background="@drawable/gradient_button" android:layout_marginBottom="32dp"
-                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginStart="8dp"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent" android:textColor="@color/white"/>
-        <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
-                app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
-                android:elevation="42dp" app:cardCornerRadius="42dp" app:cardElevation="42dp"
-                android:layout_marginTop="64dp" app:layout_constraintTop_toTopOf="parent" android:id="@+id/cardView2"
-                app:layout_constraintBottom_toTopOf="@+id/editText6" android:layout_marginBottom="64dp">
             <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                <ImageView
-                        android:src="@drawable/ic_add_circle_outline_black_24dp"
-                        android:layout_width="0dp"
-                        android:layout_height="275dp" android:id="@+id/imageView2"
-                        android:background="@color/blueGrey" android:layout_marginBottom="32dp"
-                        app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="32dp"
-                        app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView3" android:alpha="0.5"
-                        android:padding="32dp"/>
-                <ImageView
-                        android:src="@drawable/ic_add_circle_outline_black_24dp"
-                        android:layout_width="0dp"
-                        android:layout_height="275dp" android:id="@+id/imageView3"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginTop="32dp"
-                        app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="32dp"
-                        app:layout_constraintBottom_toBottomOf="parent" android:background="@color/blueGrey"
-                        app:layout_constraintStart_toEndOf="@+id/imageView2"
-                        app:layout_constraintHorizontal_bias="0.5" android:layout_marginStart="3dp"
-                        android:alpha="0.5" android:padding="32dp"/>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/include"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:elevation="20dp"
+                    android:padding="14dp"
+                    app:cardBackgroundColor="@color/cardview_light_background"
+                    app:cardCornerRadius="42dp"
+                    app:cardElevation="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textView5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:alpha="0.5"
+                            android:text="PREVIEW"
+                            android:textSize="24sp"
+                            app:layout_constraintBottom_toTopOf="@+id/post_limage"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/post_limage"
+                            android:layout_width="0dp"
+                            android:layout_height="275dp"
+                            android:layout_marginBottom="16dp"
+                            android:background="@color/blueGrey"
+                            android:scaleType="fitCenter"
+                            app:layout_constraintBottom_toTopOf="@+id/title_preview"
+                            app:layout_constraintEnd_toStartOf="@+id/post_rimage"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:srcCompat="@drawable/ic_add_circle_outline_black_24dp" />
+
+                        <ImageView
+                            android:id="@+id/post_rimage"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="3dp"
+                            android:background="@color/blueGrey"
+                            android:scaleType="fitCenter"
+                            app:layout_constraintBottom_toBottomOf="@+id/post_limage"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/post_limage"
+                            app:layout_constraintTop_toTopOf="@+id/post_limage"
+                            app:srcCompat="@drawable/ic_add_circle_outline_black_24dp" />
+
+                        <TextView
+                            android:id="@+id/title_preview"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="32dp"
+                            android:gravity="center_vertical"
+                            android:maxLines="2"
+                            android:text="Text will be showen here"
+                            android:textAlignment="center"
+                            android:textSize="24sp"
+
+                            app:autoSizeMaxTextSize="22sp"
+                            app:autoSizeTextType="uniform"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/dvada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/gradient_button"
+                    android:text="Publish"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/title_create_post"
+                    app:layout_constraintStart_toStartOf="@+id/title_create_post"
+                    app:layout_constraintTop_toBottomOf="@+id/title_create_post" />
+
+                <EditText
+                    android:id="@+id/title_create_post"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/edit_text_round"
+                    android:ems="10"
+                    android:hint="Add a title to your post."
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/include" />
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+        </ScrollView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
