@@ -15,27 +15,28 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_home -> {
-                addFragment(HomeFragment())
-                return@OnNavigationItemSelectedListener true
+    private val mOnNavigationItemSelectedListener =
+        BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    addFragment(HomeFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_add -> {
+                    addFragment(CreatePostFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_profile -> {
+                    addFragment(ProfileFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_search -> {
+                    addFragment(SearchFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
             }
-            R.id.navigation_add -> {
-                addFragment(CreatePostFragment())
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_profile -> {
-                addFragment(ProfileFragment())
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_search -> {
-                addFragment(SearchFragment())
-                return@OnNavigationItemSelectedListener true
-            }
+            false
         }
-        false
-    }
     lateinit var fragmentManager: FragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,16 +45,15 @@ class MainActivity : AppCompatActivity() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         setSupportActionBar(toolbar as androidx.appcompat.widget.Toolbar)
         supportActionBar?.title = "Choozin"
-            fragmentManager = supportFragmentManager
+        fragmentManager = supportFragmentManager
         addFragment(HomeFragment())
     }
 
     private fun addFragment(fragment: Fragment) {
-        val fragmentTransaction : FragmentTransaction = fragmentManager.beginTransaction()
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container, fragment)
         fragmentTransaction.commit()
     }
-
 
 
 }

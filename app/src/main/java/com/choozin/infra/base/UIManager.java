@@ -5,15 +5,16 @@ import java.lang.ref.WeakReference;
 public class UIManager extends BaseManager {
 
     private static UIManager instance;
+    private static WeakReference<BaseActivity> foregroundActivity;
 
-    public static UIManager getInstance(){
+    private UIManager() {
+    }
+
+    public static UIManager getInstance() {
         if (instance == null)
             instance = new UIManager();
         return instance;
     }
-    private UIManager(){}
-
-    private static WeakReference<BaseActivity> foregroundActivity;
 
     public void setActivity(BaseActivity activity) {
         foregroundActivity = new WeakReference<>(activity);

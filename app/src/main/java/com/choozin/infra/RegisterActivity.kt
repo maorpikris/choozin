@@ -17,12 +17,12 @@ class RegisterActivity : BaseActivity() {
         this.updateUI()
     }
 
-    fun backButtonClicked(view : View) {
+    fun backButtonClicked(view: View) {
         super.onBackPressed()
     }
 
     fun registerButtonClicked(view: View) {
-        if(checkValidation()) {
+        if (checkValidation()) {
             postOnSecondary(Runnable {
                 registerManager.signUp(
                     emailField.text.toString(),
@@ -61,14 +61,14 @@ class RegisterActivity : BaseActivity() {
         })
     }
 
-    private fun checkValidation() : Boolean {
+    private fun checkValidation(): Boolean {
         var result = true
         registerManager.validateFields(
             emailField.text.toString(),
             passwordField.text.toString(),
             usernameField.text.toString()
         )
-        when(registerManager.emailState.isValid) {
+        when (registerManager.emailState.isValid) {
             false -> {
                 emailField.error = registerManager.emailState.message
                 emailField.requestFocus()
@@ -82,7 +82,7 @@ class RegisterActivity : BaseActivity() {
                 result = false
             }
         }
-        when(registerManager.passwordState.isValid) {
+        when (registerManager.passwordState.isValid) {
             false -> {
                 passwordField.error = registerManager.passwordState.message
                 passwordField.requestFocus()

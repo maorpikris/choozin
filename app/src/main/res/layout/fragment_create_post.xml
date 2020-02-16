@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   xmlns:tools="http://schemas.android.com/tools"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout"
-    tools:context=".ui.fragments.CreatePostFragment"
-                                                   android:padding="0dp">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="0dp"
+    tools:context=".ui.fragments.CreatePostFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/vbbdsfb"
@@ -68,10 +68,8 @@
                             android:layout_width="0dp"
                             android:layout_height="275dp"
                             android:layout_marginBottom="16dp"
-                            android:adjustViewBounds="true"
                             android:background="@color/blueGrey"
-                            android:cropToPadding="true"
-                            android:scaleType="centerCrop"
+                            android:scaleType="fitCenter"
                             app:layout_constraintBottom_toTopOf="@+id/title_preview"
                             app:layout_constraintEnd_toStartOf="@+id/post_rimage"
                             app:layout_constraintHorizontal_bias="0.5"
@@ -83,10 +81,8 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:layout_marginStart="3dp"
-                            android:adjustViewBounds="true"
                             android:background="@color/blueGrey"
-                            android:cropToPadding="true"
-                            android:scaleType="centerCrop"
+                            android:scaleType="fitCenter"
                             app:layout_constraintBottom_toBottomOf="@+id/post_limage"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"
@@ -117,13 +113,13 @@
                 </androidx.cardview.widget.CardView>
 
                 <Button
-                    android:id="@+id/dvada"
+                    android:id="@+id/createPostButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
                     android:layout_marginBottom="24dp"
                     android:background="@drawable/gradient_button"
-                    android:text="Publish"
+                    android:text="Create"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/title_create_post"

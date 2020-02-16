@@ -14,11 +14,10 @@ import kotlinx.android.synthetic.main.fragment_profile.*
 class ProfileFragment : Fragment() {
 
 
-
-
     override fun onStart() {
         super.onStart()
-        Glide.with(activity!!.applicationContext).load(R.drawable.p1).apply(RequestOptions.circleCropTransform()).into(profile_image)
+        Glide.with(activity!!.applicationContext).load(R.drawable.p1)
+            .apply(RequestOptions.circleCropTransform()).into(profile_image)
     }
 
     override fun onCreateView(
@@ -28,7 +27,6 @@ class ProfileFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
-
 
 
 }

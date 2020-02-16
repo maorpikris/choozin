@@ -13,13 +13,14 @@ import okhttp3.RequestBody;
 
 
 public class BaseManager {
-    public BaseManager() { }
-
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
     protected Gson gson = new Gson();
     protected OkHttpClient okHttpClient = new OkHttpClient();
     private String baseUrl = "http://choozinserver-git-choozinapi.apps.us-east-2.starter.openshift-online.com/";
+
+    public BaseManager() {
+    }
 
     protected Request.Builder createRequestBuilder(String url, String o, RequestBody requestBody) {
         switch (o) {

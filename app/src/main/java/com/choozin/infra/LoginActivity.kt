@@ -15,7 +15,7 @@ class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // authManager.clearToken()
+        //authManager.clearToken()
         if (authManager.isLoggedIn) {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -85,7 +85,7 @@ class LoginActivity : BaseActivity() {
         return result
     }
 
-    fun signUpButtonClicked(view : View) {
+    fun signUpButtonClicked(view: View) {
         val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
     }

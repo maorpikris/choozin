@@ -21,18 +21,17 @@ import okhttp3.Response;
 public class RegisterManager extends BaseManager {
     private static RegisterManager instance = null;
     public RegisterState registerState = RegisterState.INIT;
+    public FieldValidationState usernameState;
+    public FieldValidationState emailState;
+    public FieldValidationState passwordState;
 
     public static RegisterManager getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new RegisterManager();
 
         }
         return instance;
     }
-
-    public FieldValidationState usernameState;
-    public FieldValidationState emailState;
-    public FieldValidationState passwordState;
 
     public void signUp(String email, String password, String username, RegisterActivity activity) {
         registerState = RegisterState.LOADING;
@@ -70,20 +69,20 @@ public class RegisterManager extends BaseManager {
     }
 
     public void validateFields(String email, String password, String username) {
-            if(email.equals("")) {
-                emailState = new FieldValidationState(false, "Please enter an email");
-            } else if(!isEmailValid(email)) {
-                emailState = new FieldValidationState(false, "Email is unvalid");
-            } else {
-                emailState = new FieldValidationState(true, "");
-            }
-            if(password.equals("")) {
-                passwordState = new FieldValidationState(false, "Please enter a password");
-            } else if(password.length() < 6) {
-                passwordState = new FieldValidationState(false, "Password is unvalid");
-            } else {
-                passwordState = new FieldValidationState(true, "");
-            }
+        if (email.equals("")) {
+            emailState = new FieldValidationState(false, "Please enter an email");
+        } else if (!isEmailValid(email)) {
+            emailState = new FieldValidationState(false, "Email is unvalid");
+        } else {
+            emailState = new FieldValidationState(true, "");
+        }
+        if (password.equals("")) {
+            passwordState = new FieldValidationState(false, "Please enter a password");
+        } else if (password.length() < 6) {
+            passwordState = new FieldValidationState(false, "Password is unvalid");
+        } else {
+            passwordState = new FieldValidationState(true, "");
+        }
         if (username.equals("")) {
             usernameState = new FieldValidationState(false, "Please enter a username");
         } else {

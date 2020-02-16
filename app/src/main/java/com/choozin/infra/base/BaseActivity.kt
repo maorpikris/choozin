@@ -18,10 +18,11 @@ open class BaseActivity : Activity() {
         ThreadsManager.getInstance().getDefaultHandler("secondary").post(runnable)
     }
 
-    fun showToast(text : CharSequence, duration:Int) {
+    fun showToast(text: CharSequence, duration: Int) {
         Toast.makeText(applicationContext, text, duration).show()
     }
-    fun showToast(text : CharSequence) {
+
+    fun showToast(text: CharSequence) {
         Toast.makeText(applicationContext, text, Toast.LENGTH_SHORT).show()
     }
 

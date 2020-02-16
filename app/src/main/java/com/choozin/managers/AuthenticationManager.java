@@ -20,24 +20,21 @@ import okhttp3.Response;
 
 public class AuthenticationManager extends BaseManager {
 
+    private static AuthenticationManager instance = null;
     public String currentUserToken = null;
     public User currentUser;
-
     public FieldValidationState emailState;
+    public FieldValidationState passwordState;
+    public LoginScreenState loginScreenState;
 
-    private static AuthenticationManager instance = null;
     public static AuthenticationManager getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new AuthenticationManager();
         }
         return instance;
     }
 
-    public FieldValidationState passwordState;
-    public LoginScreenState loginScreenState;
-
-    public boolean isLoggedIn()
-    {
+    public boolean isLoggedIn() {
         if (getSharedPrefs().getString("token", null) != null) {
             currentUserToken = getSharedPrefs().getString("token", null);
             return true;
