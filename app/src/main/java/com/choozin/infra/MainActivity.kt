@@ -1,6 +1,7 @@
 package com.choozin.infra
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -50,6 +51,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addFragment(fragment: Fragment) {
+        if (fragment is ProfileFragment) {
+            Log.v("great", "dabv")
+            val args = Bundle()
+            args.putString("currentUser", "currentUser")
+            fragment.arguments = args
+        }
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container, fragment)
         fragmentTransaction.commit()

@@ -39,11 +39,11 @@ public class User {
         this.password = password;
     }
 
-    public User(int userId, String email, String username, String imageUrl) {
+    public User(int userId, String email, String username, String profileUrl) {
         this.userId = userId;
         this.email = email;
         this.username = username;
-        this.profileUrl = imageUrl;
+        this.profileUrl = profileUrl;
     }
 
     public User(int userId, String email, String username) {
@@ -132,11 +132,11 @@ public class User {
         this.username = username;
     }
 
-    public String getImageUrl() {
+    public String getprofileUrl() {
         return profileUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.profileUrl = imageUrl;
+    public void setprofileUrl(String profileUrl) {
+        this.profileUrl = profileUrl;
     }
 }

@@ -64,6 +64,7 @@ public class AuthenticationManager extends BaseManager {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         setToken(jsonObject.getString("token"));
+                        currentUser = gson.fromJson(jsonObject.get("user").toString(), User.class);
                         loginScreenState = LoginScreenState.AUTH;
                         UIManager.getInstance().dispatchUpdateUI();
                         return;

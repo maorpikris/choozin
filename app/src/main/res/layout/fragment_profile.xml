@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -35,7 +35,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -44,8 +44,8 @@
             android:textColor="@android:color/darker_gray"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textView8"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+            app:layout_constraintStart_toStartOf="@+id/username"
+            app:layout_constraintTop_toBottomOf="@+id/username" />
 
         <TextView
             android:id="@+id/textView10"
@@ -54,8 +54,8 @@
             android:layout_marginTop="8dp"
             android:text="Followers"
             android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/textView9"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            app:layout_constraintStart_toStartOf="@+id/description"
+            app:layout_constraintTop_toBottomOf="@+id/description" />
 
         <TextView
             android:id="@+id/textView12"
@@ -68,7 +68,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView10" />
 
         <TextView
-            android:id="@+id/textView17"
+            android:id="@+id/followers"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="10K"
@@ -80,7 +80,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
         <TextView
-            android:id="@+id/textView18"
+            android:id="@+id/following"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="100"
@@ -99,25 +99,31 @@
             android:background="@android:color/transparent"
             android:src="@drawable/ic_settings_black_24dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView8" />
+            app:layout_constraintTop_toTopOf="@+id/username" />
 
         <com.google.android.material.tabs.TabLayout
+            android:id="@+id/profiletab"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView17">
+            app:layout_constraintTop_toBottomOf="@+id/followers">
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/posts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="My Posts" />
+                android:text="My Posts"
+                android:visibility="gone" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/fav"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Favorites" />
+                android:text="Favorites"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
 
         </com.google.android.material.tabs.TabLayout>

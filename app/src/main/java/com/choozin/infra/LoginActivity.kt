@@ -15,7 +15,7 @@ class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //authManager.clearToken()
+        authManager.clearToken()
         if (authManager.isLoggedIn) {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)

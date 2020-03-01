@@ -5,8 +5,8 @@ import java.util.List;
 
 public class PostItem {
     private String title;
-    private String rImageUrl;
-    private String lImageUrl;
+    private String rprofileUrl;
+    private String lprofileUrl;
     private int rVotes;
     private int lVotes;
     private String postId;
@@ -16,10 +16,10 @@ public class PostItem {
     private User creator;
     private Date createdAt;
 
-    public PostItem(String title, String rImageUrl, String lImageUrl, int rVotes, int lVotes, int fav, User creator, Date createdAt) {
+    public PostItem(String title, String rprofileUrl, String lprofileUrl, int rVotes, int lVotes, int fav, User creator, Date createdAt) {
         this.title = title;
-        this.rImageUrl = rImageUrl;
-        this.lImageUrl = lImageUrl;
+        this.rprofileUrl = rprofileUrl;
+        this.lprofileUrl = lprofileUrl;
         this.rVotes = rVotes;
         this.lVotes = lVotes;
         this.fav = fav;
@@ -55,12 +55,12 @@ public class PostItem {
         return title;
     }
 
-    public String getrImageUrl() {
-        return rImageUrl;
+    public String getrprofileUrl() {
+        return rprofileUrl;
     }
 
-    public String getlImageUrl() {
-        return lImageUrl;
+    public String getlprofileUrl() {
+        return lprofileUrl;
     }
 
     public int getrVotes() {
