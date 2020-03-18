@@ -17,7 +17,7 @@ public class BaseManager {
             = MediaType.parse("application/json; charset=utf-8");
     protected Gson gson = new Gson();
     protected OkHttpClient okHttpClient = new OkHttpClient();
-    private String baseUrl = "http://choozinserver-git-choozinapi.apps.us-east-2.starter.openshift-online.com/";
+    private String baseUrl = "http://choozinserver-git-choozinapi.apps.us-east-1.starter.openshift-online.com/";
 
     public BaseManager() {
     }
@@ -28,6 +28,8 @@ public class BaseManager {
                 return new Request.Builder().url(baseUrl + url).post(requestBody);
             case "put":
                 return new Request.Builder().url(baseUrl + url).put(requestBody);
+            case "get":
+                return new Request.Builder().url(baseUrl + url).get();
             default:
                 return null;
         }

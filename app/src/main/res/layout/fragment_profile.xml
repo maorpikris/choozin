@@ -47,50 +47,6 @@
             app:layout_constraintStart_toStartOf="@+id/username"
             app:layout_constraintTop_toBottomOf="@+id/username" />
 
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Followers"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/description"
-            app:layout_constraintTop_toBottomOf="@+id/description" />
-
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:text="Following"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/textView10"
-            app:layout_constraintTop_toTopOf="@+id/textView10" />
-
-        <TextView
-            android:id="@+id/followers"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="10K"
-            android:textAlignment="center"
-            android:textColor="@color/gold"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/textView10"
-            app:layout_constraintStart_toStartOf="@+id/textView10"
-            app:layout_constraintTop_toBottomOf="@+id/textView10" />
-
-        <TextView
-            android:id="@+id/following"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="100"
-            android:textAlignment="center"
-            android:textColor="@color/gold"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/textView12"
-            app:layout_constraintStart_toStartOf="@+id/textView12"
-            app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="wrap_content"
@@ -101,31 +57,37 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/username" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/profiletab"
-            android:layout_width="0dp"
+        <Button
+            android:id="@+id/stars"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="12dp"
+            android:backgroundTint="@color/cardview_light_background"
+            android:clickable="false"
+            android:drawableLeft="@drawable/ic_star_black_24dp"
+            android:elevation="16dp"
+            android:shadowColor="#FFEB3B"
+            android:text="128"
+            app:layout_constraintStart_toEndOf="@+id/profile_image"
+            app:layout_constraintTop_toBottomOf="@+id/description" />
+
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add friend"
+            app:layout_constraintEnd_toEndOf="@+id/description"
+            app:layout_constraintTop_toTopOf="@+id/stars" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/profilePostsRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/followers">
+            app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/posts"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="My Posts"
-                android:visibility="gone" />
-
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/fav"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Favorites"
-                android:visibility="gone"
-                tools:visibility="visible" />
-
-
-        </com.google.android.material.tabs.TabLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

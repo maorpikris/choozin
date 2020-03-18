@@ -4,28 +4,59 @@ import java.util.List;
 
 public class User {
 
-    private int userId;
+    private String _id;
     private String email;
     private String password;
     private String username;
     private String profileUrl;
     private String description;
     private List<String> posts;
-    private List<String> followers;
-    private List<String> following;
+    private int stars;
     private List<String> favorites;
+    private List<String> wait;
+    private List<String> waiting;
+    private boolean accountprivate;
 
-    public User(int userId, String email, String password, String username, String profileUrl, String description, List<String> posts, List<String> followers, List<String> following, List<String> favorites) {
-        this.userId = userId;
+    public User(String _id, String email, String password, String username, String profileUrl, String description, List<String> posts, int stars, List<String> favorites, List<String> wait, List<String> waiting, boolean accountprivate) {
+        this._id = _id;
         this.email = email;
         this.password = password;
         this.username = username;
         this.profileUrl = profileUrl;
         this.description = description;
         this.posts = posts;
-        this.followers = followers;
-        this.following = following;
+        this.stars = stars;
         this.favorites = favorites;
+        this.wait = wait;
+        this.waiting = waiting;
+        this.accountprivate = accountprivate;
+    }
+
+    public User(String _id, String email, String username, String profileUrl) {
+        this._id = _id;
+        this.email = email;
+        this.username = username;
+        this.profileUrl = profileUrl;
+    }
+
+    public List<String> getWait() {
+        return wait;
+    }
+
+    public void setWait(List<String> wait) {
+        this.wait = wait;
+    }
+
+    public List<String> getWaiting() {
+        return waiting;
+    }
+
+    public void setWaiting(List<String> waiting) {
+        this.waiting = waiting;
+    }
+
+    public boolean isAccountprivate() {
+        return accountprivate;
     }
 
     public User(String email, String password, String username) {
@@ -39,17 +70,16 @@ public class User {
         this.password = password;
     }
 
-    public User(int userId, String email, String username, String profileUrl) {
-        this.userId = userId;
-        this.email = email;
-        this.username = username;
-        this.profileUrl = profileUrl;
+    public void setAccountprivate(boolean accountprivate) {
+        this.accountprivate = accountprivate;
     }
 
-    public User(int userId, String email, String username) {
-        this.userId = userId;
-        this.email = email;
-        this.username = username;
+    public int getStars() {
+        return stars;
+    }
+
+    public void setStars(int stars) {
+        this.stars = stars;
     }
 
     public String getProfileUrl() {
@@ -66,22 +96,6 @@ public class User {
 
     public void setPosts(List<String> posts) {
         this.posts = posts;
-    }
-
-    public List<String> getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(List<String> followers) {
-        this.followers = followers;
-    }
-
-    public List<String> getFollowing() {
-        return following;
-    }
-
-    public void setFollowing(List<String> following) {
-        this.following = following;
     }
 
     public List<String> getFavorites() {
@@ -108,12 +122,12 @@ public class User {
         this.password = password;
     }
 
-    public int getUserId() {
-        return userId;
+    public String get_id() {
+        return _id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getEmail() {

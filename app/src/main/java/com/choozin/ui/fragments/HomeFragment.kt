@@ -14,6 +14,7 @@ class HomeFragment : Fragment() {
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
 
+
     private val TAG: String = "HomeFragment"
 
     override fun onCreateView(

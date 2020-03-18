@@ -1,12 +1,13 @@
 package com.choozin.infra
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.choozin.R
+import com.choozin.infra.base.BaseFragment
+import com.choozin.infra.base.FragmentUIManager
 import com.choozin.ui.fragments.CreatePostFragment
 import com.choozin.ui.fragments.HomeFragment
 import com.choozin.ui.fragments.ProfileFragment
@@ -16,23 +17,29 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    val fragmentUIManager = FragmentUIManager.getInstance()
+
     private val mOnNavigationItemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
                     addFragment(HomeFragment())
+                    fragmentUIManager.setFragment(HomeFragment() as BaseFragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_add -> {
                     addFragment(CreatePostFragment())
+                    fragmentUIManager.setFragment(CreatePostFragment() as BaseFragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_profile -> {
                     addFragment(ProfileFragment())
+                    fragmentUIManager.setFragment(ProfileFragment() as BaseFragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_search -> {
                     addFragment(SearchFragment())
+                    fragmentUIManager.setFragment(SearchFragment() as BaseFragment)
                     return@OnNavigationItemSelectedListener true
                 }
             }
@@ -52,7 +59,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun addFragment(fragment: Fragment) {
         if (fragment is ProfileFragment) {
-            Log.v("great", "dabv")
             val args = Bundle()
             args.putString("currentUser", "currentUser")
             fragment.arguments = args
