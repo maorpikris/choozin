@@ -23,7 +23,7 @@ class ProfileFragment : BaseFragment() {
 
     val authManager = AuthenticationManager.getInstance()
     var isLoading: Boolean = false
-    lateinit var postsList: ArrayList<PostItem?>
+    var postsList: ArrayList<PostItem?> = arrayListOf()
     lateinit var recyclerViewAdapter: ProfilePostsAdapter
 
     override fun onStart() {
@@ -40,12 +40,17 @@ class ProfileFragment : BaseFragment() {
         profile_image.setOnClickListener {
 
         }
+        recyclerViewAdapter = ProfilePostsAdapter(postsList)
+        profilePostsRecyclerView.adapter = recyclerViewAdapter
+        profilePostsRecyclerView.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
 
     }
 
     override fun updateUI() {
         if (PostsManager.getInstance().firstLoadProfilePosts) {
+            postsList.addAll(PostsManager.getInstance().profilePosts)
             initAdapter()
             initScrollListener()
         } else {
@@ -63,8 +68,7 @@ class ProfileFragment : BaseFragment() {
     }
 
     private fun initAdapter() {
-        recyclerViewAdapter = ProfilePostsAdapter(postsList)
-        profilePostsRecyclerView.adapter = recyclerViewAdapter
+        recyclerViewAdapter.notifyDataSetChanged()
     }
 
     private fun initScrollListener() {
@@ -107,7 +111,9 @@ class ProfileFragment : BaseFragment() {
     ): View? {
         // Inflate the layout for this fragment
         populateData(0)
+
         return inflater.inflate(R.layout.fragment_profile, container, false)
+
     }
 
 

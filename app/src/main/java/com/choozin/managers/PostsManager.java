@@ -95,8 +95,7 @@ public class PostsManager extends BaseManager {
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try {
                     ArrayList<PostItem> postItemArrayList = new ArrayList<>();
-                    JSONObject jsonObject = new JSONObject(response.body().string());
-                    JSONArray jsonArray = new JSONArray(jsonObject.getJSONArray("posts"));
+                    JSONArray jsonArray = new JSONArray(response.body().string());
 
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject entry = jsonArray.getJSONObject(i);

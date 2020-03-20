@@ -1,38 +1,78 @@
 package com.choozin.models;
 
-import java.util.Date;
 import java.util.List;
 
 public class PostItem {
     private String title;
-    private String rprofileUrl;
-    private String lprofileUrl;
+    private String rImageUrl;
+    private String lImageUrl;
     private int rVotes;
     private int lVotes;
-    private String postId;
+    private String _id;
     private List<String> rVoters;
     private List<String> lVoters;
     private int fav;
-    private User creator;
-    private Date createdAt;
+    private String creator;
 
-    public PostItem(String title, String rprofileUrl, String lprofileUrl, int rVotes, int lVotes, int fav, User creator, Date createdAt) {
+    public PostItem(String title, String rImageUrl, String lImageUrl, int rVotes, int lVotes, String _id, List<String> rVoters, List<String> lVoters, int fav, String creator) {
         this.title = title;
-        this.rprofileUrl = rprofileUrl;
-        this.lprofileUrl = lprofileUrl;
+        this.rImageUrl = rImageUrl;
+        this.lImageUrl = lImageUrl;
         this.rVotes = rVotes;
         this.lVotes = lVotes;
+        this._id = _id;
+        this.rVoters = rVoters;
+        this.lVoters = lVoters;
         this.fav = fav;
         this.creator = creator;
-        this.createdAt = createdAt;
     }
 
-    public String getPostId() {
-        return postId;
+    public String getTitle() {
+        return title;
     }
 
-    public void setPostId(String postId) {
-        this.postId = postId;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getrImageUrl() {
+        return rImageUrl;
+    }
+
+    public void setrImageUrl(String rImageUrl) {
+        this.rImageUrl = rImageUrl;
+    }
+
+    public String getlImageUrl() {
+        return lImageUrl;
+    }
+
+    public void setlImageUrl(String lImageUrl) {
+        this.lImageUrl = lImageUrl;
+    }
+
+    public int getrVotes() {
+        return rVotes;
+    }
+
+    public void setrVotes(int rVotes) {
+        this.rVotes = rVotes;
+    }
+
+    public int getlVotes() {
+        return lVotes;
+    }
+
+    public void setlVotes(int lVotes) {
+        this.lVotes = lVotes;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public List<String> getrVoters() {
@@ -51,35 +91,19 @@ public class PostItem {
         this.lVoters = lVoters;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getrprofileUrl() {
-        return rprofileUrl;
-    }
-
-    public String getlprofileUrl() {
-        return lprofileUrl;
-    }
-
-    public int getrVotes() {
-        return rVotes;
-    }
-
-    public int getlVotes() {
-        return lVotes;
-    }
-
     public int getFav() {
         return fav;
     }
 
-    public User getCreator() {
+    public void setFav(int fav) {
+        this.fav = fav;
+    }
+
+    public String getCreator() {
         return creator;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 }
