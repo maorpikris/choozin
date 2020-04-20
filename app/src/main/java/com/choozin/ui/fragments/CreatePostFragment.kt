@@ -3,7 +3,7 @@ package com.choozin.ui.fragments
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
@@ -72,16 +72,8 @@ class CreatePostFragment : BaseFragment() {
     fun createPost() {
         val drawableRight = post_rimage.drawable as Drawable
         val drawableLeft = post_limage.drawable as Drawable
-        val bitmapRight = Bitmap.createBitmap(
-            drawableRight.intrinsicWidth,
-            drawableLeft.intrinsicHeight,
-            Bitmap.Config.ARGB_8888
-        )
-        val bitmapLeft = Bitmap.createBitmap(
-            drawableRight.intrinsicWidth,
-            drawableLeft.intrinsicHeight,
-            Bitmap.Config.ARGB_8888
-        )
+        val bitmapRight = (drawableRight as BitmapDrawable).bitmap
+        val bitmapLeft = (drawableLeft as BitmapDrawable).bitmap
         PostsManager.getInstance()
             .createPost(bitmapRight, bitmapLeft, title_create_post.text.toString())
     }

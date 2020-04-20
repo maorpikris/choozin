@@ -1,6 +1,7 @@
 package com.choozin.infra.adapters
 
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,6 +65,7 @@ class ProfilePostsAdapter(val posts: ArrayList<PostItem?>) :
             itemView.title_preview.text = post.title
             itemView.post_rimage.setImageBitmap(BitmapManipulation.StringToBitMap(post.getrImage()))
             itemView.post_limage.setImageBitmap(BitmapManipulation.StringToBitMap(post.getlImage()))
+            Log.v("rimgaefromserver", post.getrImage())
             if (AuthenticationManager.getInstance().currentUser.favorites.contains(post._id)) {
 
             }

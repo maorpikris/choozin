@@ -42,10 +42,9 @@ public class PostsManager extends BaseManager {
     public void createPost(Bitmap right, Bitmap left, String title) {
         String limage = BitmapManipulation.BitMapToString(left);
         String rimage = BitmapManipulation.BitMapToString(right);
-        Log.v("Avassd", rimage);
+        Log.v("rimage", rimage);
         PostItem post = new PostItem(title, rimage, limage);
         String postJson = gson.toJson(post);
-        Log.v("fa", postJson);
         RequestBody requestBody = RequestBody.create(JSON, postJson);
 
         Request request = createRequestBuilder("posts", "post", requestBody).build().newBuilder().header("Authorization", AuthenticationManager.getInstance().currentUserToken).build();
@@ -60,7 +59,6 @@ public class PostsManager extends BaseManager {
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try {
                     JSONObject jsonObject = new JSONObject(response.body().string());
-                    Log.i("fbfabafvafas", jsonObject.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -86,6 +84,7 @@ public class PostsManager extends BaseManager {
 
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject entry = jsonArray.getJSONObject(i);
+                        Log.v("shit", entry.toString());
                         postItemArrayList.add(gson.fromJson(entry.toString(), PostItem.class));
                     }
                     profilePosts = postItemArrayList;
