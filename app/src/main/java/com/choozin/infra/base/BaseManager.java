@@ -16,8 +16,8 @@ public class BaseManager {
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
     protected Gson gson = new Gson();
-    protected OkHttpClient okHttpClient = new OkHttpClient();
-    private String baseUrl = "http://choozinserver-git-choozinapi.apps.us-east-1.starter.openshift-online.com/";
+    public static OkHttpClient okHttpClient = new OkHttpClient();
+    private String baseUrl = "https://choozin.herokuapp.com/";
 
     public BaseManager() {
     }

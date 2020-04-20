@@ -17,29 +17,33 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    val fragmentUIManager = FragmentUIManager.getInstance()
+    private val fragmentUIManager: FragmentUIManager = FragmentUIManager.getInstance()
+    private val homeFragment = HomeFragment()
 
     private val mOnNavigationItemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
-                    addFragment(HomeFragment())
-                    fragmentUIManager.setFragment(HomeFragment() as BaseFragment)
+                    addFragment(homeFragment)
+                    fragmentUIManager.setFragment(homeFragment as BaseFragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_add -> {
-                    addFragment(CreatePostFragment())
-                    fragmentUIManager.setFragment(CreatePostFragment() as BaseFragment)
+                    val createPostFragment = CreatePostFragment()
+                    addFragment(createPostFragment)
+                    fragmentUIManager.setFragment(createPostFragment as BaseFragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_profile -> {
-                    addFragment(ProfileFragment())
-                    fragmentUIManager.setFragment(ProfileFragment() as BaseFragment)
+                    val profileFragment = ProfileFragment()
+                    addFragment(profileFragment)
+                    fragmentUIManager.setFragment(profileFragment as BaseFragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_search -> {
-                    addFragment(SearchFragment())
-                    fragmentUIManager.setFragment(SearchFragment() as BaseFragment)
+                    val searchFragment = SearchFragment()
+                    addFragment(searchFragment)
+                    fragmentUIManager.setFragment(searchFragment as BaseFragment)
                     return@OnNavigationItemSelectedListener true
                 }
             }
@@ -54,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar as androidx.appcompat.widget.Toolbar)
         supportActionBar?.title = "Choozin"
         fragmentManager = supportFragmentManager
-        addFragment(HomeFragment())
+        addFragment(homeFragment)
     }
 
     private fun addFragment(fragment: Fragment) {

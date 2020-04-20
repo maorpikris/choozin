@@ -1,5 +1,7 @@
 package com.choozin.managers;
 
+import android.util.Log;
+
 import com.choozin.infra.base.BaseManager;
 import com.choozin.infra.base.UIManager;
 import com.choozin.models.User;
@@ -75,6 +77,7 @@ public class AuthenticationManager extends BaseManager {
                     }
 
                 }
+                Log.v("adas", response.message());
                 loginScreenState = LoginScreenState.FAILED_AUTH;
                 UIManager.getInstance().dispatchUpdateUI();
             }

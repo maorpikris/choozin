@@ -1,5 +1,7 @@
 package com.choozin.infra.base;
 
+import com.choozin.managers.ThreadsManager;
+
 import java.lang.ref.WeakReference;
 
 public class FragmentUIManager extends BaseManager {
@@ -17,9 +19,19 @@ public class FragmentUIManager extends BaseManager {
         foregroundFragment = new WeakReference<>(fragment);
     }
 
+    public WeakReference<BaseFragment> getForegroundFragment() {
+        return foregroundFragment;
+    }
+
     public void dispatchUpdateUI() {
         if (foregroundFragment != null && foregroundFragment.get() != null) {
-            foregroundFragment.get().updateUI();
+            ThreadsManager.getInstance().getDefaultHandler(ThreadsManager.MainThread).post(new Runnable() {
+                @Override
+                public void run() {
+                    foregroundFragment.get().updateUI();
+                }
+            });
+
         }
     }
 

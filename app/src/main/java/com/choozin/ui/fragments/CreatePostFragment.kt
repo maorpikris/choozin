@@ -12,15 +12,15 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.choozin.R
 import com.choozin.infra.CropActivity
+import com.choozin.infra.base.BaseFragment
 import com.choozin.managers.PostsManager
 import kotlinx.android.synthetic.main.fragment_create_post.*
 import kotlinx.android.synthetic.main.fragment_create_post.view.*
 
 
-class CreatePostFragment : Fragment() {
+class CreatePostFragment : BaseFragment() {
 
     private val RIGHT = 1
     private val LEFT = 2

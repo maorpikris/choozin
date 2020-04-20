@@ -1,19 +1,23 @@
 package com.choozin.infra.adapters
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.choozin.ChoozinApplication
 import com.choozin.R
 import com.choozin.managers.AuthenticationManager
 import com.choozin.models.PostItem
+import com.choozin.utils.BitmapManipulation
 import kotlinx.android.synthetic.main.post_item.view.*
 import java.util.*
 
 
 class ProfilePostsAdapter(val posts: ArrayList<PostItem?>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     private val VIEW_TYPE_ITEM = 0
     private val VIEW_TYPE_LOADING = 1
 
@@ -38,6 +42,7 @@ class ProfilePostsAdapter(val posts: ArrayList<PostItem?>) :
         return posts.size
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is MyViewHolder) {
             val post = posts[position]
@@ -53,13 +58,17 @@ class ProfilePostsAdapter(val posts: ArrayList<PostItem?>) :
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        @RequiresApi(Build.VERSION_CODES.O)
         fun setData(post: PostItem?, pos: Int) {
             itemView.post_username.text = post!!.creator
             itemView.title_preview.text = post.title
-
+            itemView.post_rimage.setImageBitmap(BitmapManipulation.StringToBitMap(post.getrImage()))
+            itemView.post_limage.setImageBitmap(BitmapManipulation.StringToBitMap(post.getlImage()))
             if (AuthenticationManager.getInstance().currentUser.favorites.contains(post._id)) {
 
             }
+
+
         }
     }
 }

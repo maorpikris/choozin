@@ -4,8 +4,8 @@ import java.util.List;
 
 public class PostItem {
     private String title;
-    private String rImageUrl;
-    private String lImageUrl;
+    private String rImage;
+    private String lImage;
     private int rVotes;
     private int lVotes;
     private String _id;
@@ -14,10 +14,10 @@ public class PostItem {
     private int fav;
     private String creator;
 
-    public PostItem(String title, String rImageUrl, String lImageUrl, int rVotes, int lVotes, String _id, List<String> rVoters, List<String> lVoters, int fav, String creator) {
+    public PostItem(String title, String rImage, String lImage, int rVotes, int lVotes, String _id, List<String> rVoters, List<String> lVoters, int fav, String creator) {
         this.title = title;
-        this.rImageUrl = rImageUrl;
-        this.lImageUrl = lImageUrl;
+        this.rImage = rImage;
+        this.lImage = lImage;
         this.rVotes = rVotes;
         this.lVotes = lVotes;
         this._id = _id;
@@ -25,6 +25,12 @@ public class PostItem {
         this.lVoters = lVoters;
         this.fav = fav;
         this.creator = creator;
+    }
+
+    public PostItem(String title, String rImage, String lImage) {
+        this.title = title;
+        this.rImage = rImage;
+        this.lImage = lImage;
     }
 
     public String getTitle() {
@@ -35,20 +41,20 @@ public class PostItem {
         this.title = title;
     }
 
-    public String getrImageUrl() {
-        return rImageUrl;
+    public String getrImage() {
+        return rImage;
     }
 
-    public void setrImageUrl(String rImageUrl) {
-        this.rImageUrl = rImageUrl;
+    public void setrImage(String rImageUrl) {
+        this.rImage = rImageUrl;
     }
 
-    public String getlImageUrl() {
-        return lImageUrl;
+    public String getlImage() {
+        return lImage;
     }
 
-    public void setlImageUrl(String lImageUrl) {
-        this.lImageUrl = lImageUrl;
+    public void setlImage(String lImageUrl) {
+        this.lImage = lImageUrl;
     }
 
     public int getrVotes() {
