@@ -24,78 +24,56 @@ class ProfileFragment : BaseFragment() {
     var isLoading: Boolean = false
     var postsList: ArrayList<PostItem?> = arrayListOf()
     lateinit var recyclerViewAdapter: ProfilePostsAdapter
-
+    val bundle: Bundle? = this.arguments
+    //val profileId = bundle!!.getString("profileId")
 
     override fun updateUI() {
-        if (PostsManager.getInstance().firstLoadProfilePosts) {
-            postsList.addAll(PostsManager.getInstance().profilePosts)
-            initAdapter()
-            //initScrollListener()
-        } else {
-            postsList.addAll(PostsManager.getInstance().profilePosts)
-        }
+
+        postsList.clear()
+        postsList.addAll(PostsManager.getInstance().profilePosts)
+
+        initAdapter()
 
     }
 
-    private fun populateData(current: Int) {
+    private fun populateData() {
 
         Log.i("dab", AuthenticationManager.getInstance().currentUser._id)
         PostsManager.getInstance()
-            .getProfilePosts(AuthenticationManager.getInstance().currentUser._id, current)
+            .getProfilePosts(authManager.currentUser._id)
 
     }
 
     private fun initAdapter() {
+        if (swipeContainer != null) {
+            swipeContainer.isRefreshing = false
+        }
+        if (!this::recyclerViewAdapter.isInitialized) {
+            recyclerViewAdapter = ProfilePostsAdapter(postsList)
+        }
         recyclerViewAdapter.notifyDataSetChanged()
-    }
-
-//    private fun initScrollListener() {
-//        profilePostsRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//
-//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-//                super.onScrolled(recyclerView, dx, dy)
-//
-//                val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager?
-//
-//                if (!isLoading) {
-//                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == postsList.size - 1) {
-//                        //bottom of list!
-//                        loadMore()
-//                        isLoading = true
-//                    }
-//                }
-//            }
-//        })
-//    }
-
-    private fun loadMore() {
-        postsList.add(null)
-        recyclerViewAdapter.notifyItemInserted(postsList.size - 1)
-
-
-        postsList.removeAt(postsList.size - 1)
-        val scrollPosition = postsList.size
-        recyclerViewAdapter.notifyItemRemoved(scrollPosition)
-        PostsManager.getInstance().firstLoadProfilePostsToFalse()
-        populateData(scrollPosition)
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         username.text = authManager.currentUser.username
         description.text = authManager.currentUser.description
         Glide.with(activity!!.applicationContext)
-            .load("http://choozinserver-git-choozinapi.apps.us-east-1.starter.openshift-online.com" + authManager.currentUser.profileUrl)
+            .load(AuthenticationManager.buildGlideUrlWithAuth(authManager.currentUser.profileUrl))
             .apply(RequestOptions.circleCropTransform()).into(profile_image)
 
         profile_image.setOnClickListener {
 
         }
+        if (PostsManager.getInstance().profilePosts != null) {
+            postsList = PostsManager.getInstance().profilePosts
+        }
         recyclerViewAdapter = ProfilePostsAdapter(postsList)
         profilePostsRecyclerView.adapter = recyclerViewAdapter
         profilePostsRecyclerView.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        swipeContainer.setOnRefreshListener {
+            populateData()
+        }
 
         super.onViewCreated(view, savedInstanceState)
     }
@@ -105,7 +83,7 @@ class ProfileFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        populateData(0)
+        populateData()
         return inflater.inflate(R.layout.fragment_profile, container, false)
 
     }

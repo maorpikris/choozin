@@ -1,8 +1,9 @@
 package com.choozin.models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
 
     private String _id;
     private String email;

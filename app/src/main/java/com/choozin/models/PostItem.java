@@ -12,9 +12,10 @@ public class PostItem {
     private List<String> rVoters;
     private List<String> lVoters;
     private int fav;
-    private String creator;
+    private User creator;
+    private String createdAt;
 
-    public PostItem(String title, String rImage, String lImage, int rVotes, int lVotes, String _id, List<String> rVoters, List<String> lVoters, int fav, String creator) {
+    public PostItem(String title, String rImage, String lImage, int rVotes, int lVotes, String _id, List<String> rVoters, List<String> lVoters, int fav, User creator, String createdAt) {
         this.title = title;
         this.rImage = rImage;
         this.lImage = lImage;
@@ -25,12 +26,21 @@ public class PostItem {
         this.lVoters = lVoters;
         this.fav = fav;
         this.creator = creator;
+        this.createdAt = createdAt;
     }
 
     public PostItem(String title, String rImage, String lImage) {
         this.title = title;
         this.rImage = rImage;
         this.lImage = lImage;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getTitle() {
@@ -105,11 +115,11 @@ public class PostItem {
         this.fav = fav;
     }
 
-    public String getCreator() {
+    public User getCreator() {
         return creator;
     }
 
-    public void setCreator(String creator) {
+    public void setCreator(User creator) {
         this.creator = creator;
     }
 }

@@ -12,6 +12,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.choozin.R
 import com.choozin.infra.CropActivity
 import com.choozin.infra.base.BaseFragment
@@ -51,10 +52,10 @@ class CreatePostFragment : BaseFragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.isNullOrEmpty()) {
-                    include.title_preview.text = "Text will be showen here"
+                    include.post_title.text = "Text will be showen here"
                     return
                 }
-                include.title_preview.text = s.toString()
+                include.post_title.text = s.toString()
             }
         })
 
@@ -74,6 +75,7 @@ class CreatePostFragment : BaseFragment() {
         val drawableLeft = post_limage.drawable as Drawable
         val bitmapRight = (drawableRight as BitmapDrawable).bitmap
         val bitmapLeft = (drawableLeft as BitmapDrawable).bitmap
+
         PostsManager.getInstance()
             .createPost(bitmapRight, bitmapLeft, title_create_post.text.toString())
     }
@@ -112,6 +114,10 @@ class CreatePostFragment : BaseFragment() {
         }
 
 
+    }
+
+    override fun updateUI() {
+        Toast.makeText(context, "Post created", Toast.LENGTH_LONG)
     }
 
 

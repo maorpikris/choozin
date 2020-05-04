@@ -2,6 +2,8 @@ package com.choozin.managers;
 
 import android.util.Log;
 
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
 import com.choozin.infra.base.BaseManager;
 import com.choozin.infra.base.UIManager;
 import com.choozin.models.User;
@@ -25,6 +27,7 @@ public class AuthenticationManager extends BaseManager {
     private static AuthenticationManager instance = null;
     public String currentUserToken = null;
     public User currentUser;
+
     public FieldValidationState emailState;
     public FieldValidationState passwordState;
     public LoginScreenState loginScreenState;
@@ -36,12 +39,89 @@ public class AuthenticationManager extends BaseManager {
         return instance;
     }
 
-    public boolean isLoggedIn() {
+    public static GlideUrl buildGlideUrlWithAuth(String url) {
+        return new GlideUrl(url, new LazyHeaders.Builder()
+                .addHeader("Authorization", AuthenticationManager.getInstance().currentUserToken)
+                .build());
+    }
+
+    public void isLoggedIn() {
+
         if (getSharedPrefs().getString("token", null) != null) {
             currentUserToken = getSharedPrefs().getString("token", null);
-            return true;
+            Request request = createRequestBuilder("auth/userfromtoken", "get", null).build().newBuilder().header("Authorization", AuthenticationManager.getInstance().currentUserToken).build();
+            Call call = okHttpClient.newCall(request);
+            call.enqueue(new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    loginScreenState = LoginScreenState.INIT;
+                    Log.e("e", e.getMessage());
+                    UIManager.getInstance().dispatchUpdateUI();
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response.body().string());
+                            currentUser = gson.fromJson(jsonObject.get("user").toString(), User.class);
+                            loginScreenState = LoginScreenState.AUTH;
+
+                        } catch (JSONException e) {
+                            loginScreenState = LoginScreenState.INIT;
+                            e.printStackTrace();
+                        }
+                        UIManager.getInstance().dispatchUpdateUI();
+                    }
+
+                }
+            });
+
+        } else {
+            Log.v("a", "a");
+            loginScreenState = LoginScreenState.INIT;
+            UIManager.getInstance().dispatchUpdateUI();
         }
-        return false;
+
+    }
+
+    public void setBackToInit() {
+        loginScreenState = LoginScreenState.INIT;
+    }
+
+    public void validateLoginFields(String email, String password) {
+        if (email.equals("")) {
+            emailState = new FieldValidationState(false, "Please enter an email");
+        } else if (!isEmailValid(email)) {
+            emailState = new FieldValidationState(false, "Email is unvalid");
+        } else {
+            emailState = new FieldValidationState(true, "");
+        }
+        if (password.equals("")) {
+            passwordState = new FieldValidationState(false, "Please enter a password");
+        } else if (password.length() < 6) {
+            passwordState = new FieldValidationState(false, "Password is unvalid");
+        } else {
+            passwordState = new FieldValidationState(true, "");
+        }
+    }
+
+    public void setToken(String token) {
+        getSharedPrefs().edit().putString("token", token).apply();
+        currentUserToken = token;
+    }
+
+    public void clearToken() {
+        getSharedPrefs().edit().putString("token", null).apply();
+        currentUserToken = null;
+    }
+
+    public enum LoginScreenState {
+        INIT,
+        LOADING,
+        AUTH,
+        FAILED_AUTH,
+        FAILED_CONNECT
     }
 
     public void logInWithEmailAndPassword(String email, String password) {
@@ -78,49 +158,14 @@ public class AuthenticationManager extends BaseManager {
 
                 }
                 Log.v("adas", response.message());
-                loginScreenState = LoginScreenState.FAILED_AUTH;
+                if (response.message().equalsIgnoreCase("Service Unavailable")) {
+                    loginScreenState = LoginScreenState.FAILED_CONNECT;
+                } else {
+                    loginScreenState = LoginScreenState.FAILED_AUTH;
+                }
+
                 UIManager.getInstance().dispatchUpdateUI();
             }
         });
-    }
-
-    public void setBackToInit() {
-        loginScreenState = LoginScreenState.INIT;
-        UIManager.getInstance().dispatchUpdateUI();
-    }
-
-    public void validateLoginFields(String email, String password) {
-        if (email.equals("")) {
-            emailState = new FieldValidationState(false, "Please enter an email");
-        } else if (!isEmailValid(email)) {
-            emailState = new FieldValidationState(false, "Email is unvalid");
-        } else {
-            emailState = new FieldValidationState(true, "");
-        }
-        if (password.equals("")) {
-            passwordState = new FieldValidationState(false, "Please enter a password");
-        } else if (password.length() < 6) {
-            passwordState = new FieldValidationState(false, "Password is unvalid");
-        } else {
-            passwordState = new FieldValidationState(true, "");
-        }
-    }
-
-    public void setToken(String token) {
-        getSharedPrefs().edit().putString("token", token).apply();
-        currentUserToken = token;
-    }
-
-    public void clearToken() {
-        getSharedPrefs().edit().putString("token", null).apply();
-        currentUserToken = null;
-    }
-
-    public enum LoginScreenState {
-        INIT,
-        LOADING,
-        AUTH,
-        FAILED_AUTH,
-        FAILED_CONNECT
     }
 }

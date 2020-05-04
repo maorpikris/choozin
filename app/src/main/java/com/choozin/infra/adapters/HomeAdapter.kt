@@ -28,8 +28,8 @@ class HomeAdapter(val posts: List<PostItem>) : RecyclerView.Adapter<HomeAdapter.
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun setData(post: PostItem?, pos: Int) {
-            itemView.post_username.text = post!!.creator
-            itemView.title_preview.text = post.title
+            itemView.post_username.text = post!!.creator!!.username
+            itemView.post_title.text = post.title
 
             if (AuthenticationManager.getInstance().currentUser.favorites.contains(post._id)) {
 

@@ -15,14 +15,14 @@ import okhttp3.RequestBody;
 public class BaseManager {
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
-    protected Gson gson = new Gson();
+    public static Gson gson = new Gson();
     public static OkHttpClient okHttpClient = new OkHttpClient();
-    private String baseUrl = "https://choozin.herokuapp.com/";
+    public static String baseUrl = "https://choozin.herokuapp.com/";
 
     public BaseManager() {
     }
 
-    protected Request.Builder createRequestBuilder(String url, String o, RequestBody requestBody) {
+    public static Request.Builder createRequestBuilder(String url, String o, RequestBody requestBody) {
         switch (o) {
             case "post":
                 return new Request.Builder().url(baseUrl + url).post(requestBody);
@@ -42,5 +42,6 @@ public class BaseManager {
     protected boolean isEmailValid(String email) {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
+
 
 }

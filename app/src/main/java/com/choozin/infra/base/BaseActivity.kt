@@ -1,12 +1,12 @@
 package com.choozin.infra.base
 
-import android.app.Activity
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.choozin.managers.ThreadsManager
 
 
-open class BaseActivity : Activity() {
+open class BaseActivity : AppCompatActivity() {
 
     open fun updateUI() {}
 

@@ -2,6 +2,7 @@ package com.choozin.infra
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.choozin.R
 import com.choozin.infra.base.BaseActivity
@@ -15,14 +16,9 @@ class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        authManager.clearToken()
-        if (authManager.isLoggedIn) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            this.finish()
-        } else {
-            setContentView(R.layout.activity_login)
-        }
+        Log.v("main", "main")
+        setContentView(R.layout.activity_login)
+        authManager.isLoggedIn()
     }
 
     fun loginButtonClicked(view: View) {
@@ -40,16 +36,17 @@ class LoginActivity : BaseActivity() {
         postOnUI(Runnable {
             when (authManager.loginScreenState) {
                 AuthenticationManager.LoginScreenState.INIT -> {
+                    Log.v("dab", "Dab")
                     loading.visibility = View.INVISIBLE
                 }
                 AuthenticationManager.LoginScreenState.LOADING -> {
                     loading.visibility = View.VISIBLE
                 }
                 AuthenticationManager.LoginScreenState.AUTH -> {
-                    authManager.setBackToInit()
-                    showToast("User logged in")
+
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
+
                     this.finish()
                 }
                 AuthenticationManager.LoginScreenState.FAILED_AUTH -> {

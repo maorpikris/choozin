@@ -10,7 +10,6 @@ import com.choozin.utils.BitmapManipulation;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -18,6 +17,8 @@ import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -26,7 +27,7 @@ public class PostsManager extends BaseManager {
 
     private static PostsManager instance = null;
     public ArrayList<PostItem> profilePosts;
-    public boolean firstLoadProfilePosts = true;
+
 
     public static PostsManager getInstance() {
         if (instance == null) {
@@ -35,17 +36,12 @@ public class PostsManager extends BaseManager {
         return instance;
     }
 
-    public void firstLoadProfilePostsToFalse() {
-        firstLoadProfilePosts = false;
-    }
 
     public void createPost(Bitmap right, Bitmap left, String title) {
-        String limage = BitmapManipulation.BitMapToString(left);
-        String rimage = BitmapManipulation.BitMapToString(right);
-        Log.v("rimage", rimage);
-        PostItem post = new PostItem(title, rimage, limage);
-        String postJson = gson.toJson(post);
-        RequestBody requestBody = RequestBody.create(JSON, postJson);
+        RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("title", title)
+                .addFormDataPart("images", "r.jpg", RequestBody.create(MediaType.parse("image/*jpg"), BitmapManipulation.BitMapToString(right)))
+                .addFormDataPart("images", "l.jpg", RequestBody.create(MediaType.parse("image/*jpg"), BitmapManipulation.BitMapToString(left))).build();
 
         Request request = createRequestBuilder("posts", "post", requestBody).build().newBuilder().header("Authorization", AuthenticationManager.getInstance().currentUserToken).build();
         Call call = okHttpClient.newCall(request);
@@ -57,18 +53,20 @@ public class PostsManager extends BaseManager {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try {
-                    JSONObject jsonObject = new JSONObject(response.body().string());
-                } catch (JSONException e) {
-                    e.printStackTrace();
+
+
+                if (response.isSuccessful()) {
+
+                    FragmentUIManager.getInstance().dispatchUpdateUI();
                 }
+
 
             }
         });
     }
 
-    public void getProfilePosts(String id, int alreadyPassed) {
-        Request request = createRequestBuilder("posts/profile/" + id, "get", null).build().newBuilder().header("Authorization", AuthenticationManager.getInstance().currentUserToken).header("alreadyPassed", String.valueOf(alreadyPassed)).build();
+    public void getProfilePosts(String id) {
+        Request request = createRequestBuilder("posts/profile/" + id, "get", null).build().newBuilder().header("Authorization", AuthenticationManager.getInstance().currentUserToken).build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
@@ -95,6 +93,26 @@ public class PostsManager extends BaseManager {
                 }
             }
         });
+    }
 
+    public void postsActions(String postId, String action) {
+        final String jsonAction = "{\"action\":\"" + action + "\"}";
+        final RequestBody body = RequestBody.create(
+                MediaType.parse("application/json; charset=utf-16"), jsonAction);
+        Request request = createRequestBuilder("posts/" + postId, "put", body).build().newBuilder().header("Authorization", AuthenticationManager.getInstance().currentUserToken).build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                Log.e("e", e.getMessage());
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    // TODO think what to do.
+                }
+            }
+        });
     }
 }

@@ -46,6 +46,9 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation "com.squareup.okhttp3:okhttp:4.3.1"
     implementation 'com.oginotihiro:cropview:1.0.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+    implementation 'com.github.skydoves:androidveil:1.0.8'
+
 
 }
 

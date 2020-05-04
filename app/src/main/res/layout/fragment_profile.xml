@@ -79,16 +79,22 @@
             app:layout_constraintEnd_toEndOf="@+id/description"
             app:layout_constraintTop_toTopOf="@+id/stars" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/profilePostsRecyclerView"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeContainer"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:paddingTop="24dp"
-            android:paddingBottom="24dp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_image" />
+            app:layout_constraintTop_toBottomOf="@+id/profile_image">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/profilePostsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

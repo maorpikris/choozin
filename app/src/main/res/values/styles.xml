@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/gold</item>
         <item name="colorPrimaryDark">@color/blueGrey</item>
         <item name="colorAccent">@color/gold</item>
-        <item name="android:statusBarColor">#DFDFDF</item>
+        <item name="android:statusBarColor">@color/blueGrey</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:buttonCornerRadius" tools:targetApi="p">100dp</item>
         <item name="android:layoutDirection">ltr</item>
