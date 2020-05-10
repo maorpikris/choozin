@@ -6,25 +6,21 @@ public class PostItem {
     private String title;
     private String rImage;
     private String lImage;
-    private int rVotes;
-    private int lVotes;
     private String _id;
     private List<String> rVoters;
     private List<String> lVoters;
-    private int fav;
+    private List<String> favs;
     private User creator;
     private String createdAt;
 
-    public PostItem(String title, String rImage, String lImage, int rVotes, int lVotes, String _id, List<String> rVoters, List<String> lVoters, int fav, User creator, String createdAt) {
+    public PostItem(String title, String rImage, String lImage, int rVotes, int lVotes, String _id, List<String> rVoters, List<String> lVoters, List<String> favs, User creator, String createdAt) {
         this.title = title;
         this.rImage = rImage;
         this.lImage = lImage;
-        this.rVotes = rVotes;
-        this.lVotes = lVotes;
         this._id = _id;
         this.rVoters = rVoters;
         this.lVoters = lVoters;
-        this.fav = fav;
+        this.favs = favs;
         this.creator = creator;
         this.createdAt = createdAt;
     }
@@ -67,22 +63,6 @@ public class PostItem {
         this.lImage = lImageUrl;
     }
 
-    public int getrVotes() {
-        return rVotes;
-    }
-
-    public void setrVotes(int rVotes) {
-        this.rVotes = rVotes;
-    }
-
-    public int getlVotes() {
-        return lVotes;
-    }
-
-    public void setlVotes(int lVotes) {
-        this.lVotes = lVotes;
-    }
-
     public String get_id() {
         return _id;
     }
@@ -107,12 +87,12 @@ public class PostItem {
         this.lVoters = lVoters;
     }
 
-    public int getFav() {
-        return fav;
+    public List<String> getFavs() {
+        return favs;
     }
 
-    public void setFav(int fav) {
-        this.fav = fav;
+    public void setFavs(List<String> favs) {
+        this.favs = favs;
     }
 
     public User getCreator() {

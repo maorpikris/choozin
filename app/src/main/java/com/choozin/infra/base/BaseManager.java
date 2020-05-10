@@ -30,6 +30,8 @@ public class BaseManager {
                 return new Request.Builder().url(baseUrl + url).put(requestBody);
             case "get":
                 return new Request.Builder().url(baseUrl + url).get();
+            case "delete":
+                return new Request.Builder().url(baseUrl + url).delete();
             default:
                 return null;
         }

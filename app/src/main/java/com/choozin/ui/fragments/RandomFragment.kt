@@ -10,31 +10,27 @@ import androidx.recyclerview.widget.RecyclerView
 import com.choozin.R
 import com.choozin.infra.adapters.PostsAdapter
 import com.choozin.infra.base.BaseFragment
-import com.choozin.managers.HomeManager
+import com.choozin.managers.ExploreManager
 import com.choozin.models.PostItem
-import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_random.*
 import java.util.*
 
-
-class HomeFragment : BaseFragment() {
+class RandomFragment : BaseFragment() {
 
     var isLoading: Boolean = false
-    val manager = HomeManager().instance
-    var postsList: ArrayList<PostItem?> = arrayListOf()
+    val manager = ExploreManager().instance
+    private var postsList: ArrayList<PostItem?> = arrayListOf()
     lateinit var recyclerViewAdapter: PostsAdapter
 
-
-    val TAG: String = "Home"
     override fun updateUI() {
-
         postsList.clear()
-        postsList.addAll(manager.homePosts)
+        postsList.addAll(manager.explorePosts)
         initAdapter()
     }
 
     private fun populateData() {
         Log.v("dav", "its running yo")
-        manager.getHomePosts()
+        manager.getExplorePosts()
     }
 
     private fun initAdapter() {
@@ -42,22 +38,23 @@ class HomeFragment : BaseFragment() {
             swipeContainer.isRefreshing = false
         }
         if (!this::recyclerViewAdapter.isInitialized) {
-            recyclerViewAdapter = PostsAdapter(manager.homePosts)
+            recyclerViewAdapter = PostsAdapter(manager.explorePosts)
         }
         recyclerViewAdapter.notifyDataSetChanged()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        if (manager.homePosts != null && manager.homePosts.size > 0) {
-            postsList = manager.homePosts
+        if (manager.explorePosts != null) {
+            Log.v("work", "work")
+            postsList = manager.explorePosts
         }
         recyclerViewAdapter = PostsAdapter(postsList)
-        homePostsRecyclerView.adapter = recyclerViewAdapter
-        homePostsRecyclerView.layoutManager =
+        randomPosts.adapter = recyclerViewAdapter
+        randomPosts.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         swipeContainer.setOnRefreshListener {
-            manager.setPullToRefreshActiveTrue()
+            manager.refresh = true
             populateData()
         }
 
@@ -68,7 +65,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun initScrollListener() {
-        homePostsRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        randomPosts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -76,10 +73,10 @@ class HomeFragment : BaseFragment() {
                 val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager?
 
                 if (!isLoading) {
-                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == manager.homePosts.size - 1) {
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == manager.explorePosts.size - 1) {
                         //bottom of list!
                         Log.v("Dab", "load more")
-                        loadMore()
+                        populateData()
                         isLoading = true
                     }
                 }
@@ -88,17 +85,13 @@ class HomeFragment : BaseFragment() {
         })
     }
 
-    private fun loadMore() {
-        populateData()
-    }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflate the layout for this fragment
         populateData()
-        Log.v("dav", "its running yo")
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        return inflater.inflate(R.layout.fragment_random, container, false)
     }
 }

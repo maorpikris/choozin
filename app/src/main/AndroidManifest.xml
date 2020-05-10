@@ -15,11 +15,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".infra.CropActivity"></activity>
-        <activity android:name=".infra.MainActivity" />
-        <activity android:name=".infra.AfterRegisterActivity" />
-        <activity android:name=".infra.RegisterActivity" />
-        <activity android:name=".infra.LoginActivity">
+        <activity
+            android:name=".infra.CropActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".infra.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".infra.AfterRegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".infra.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".infra.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

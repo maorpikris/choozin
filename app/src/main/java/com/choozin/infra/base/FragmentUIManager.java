@@ -24,6 +24,7 @@ public class FragmentUIManager extends BaseManager {
     }
 
     public void dispatchUpdateUI() {
+
         if (foregroundFragment != null && foregroundFragment.get() != null) {
             ThreadsManager.getInstance().getDefaultHandler(ThreadsManager.MainThread).post(new Runnable() {
                 @Override

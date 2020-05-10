@@ -9,10 +9,11 @@ import com.choozin.infra.base.BaseActivity
 import com.choozin.infra.base.BaseFragment
 import com.choozin.infra.base.FragmentUIManager
 import com.choozin.managers.AuthenticationManager
+import com.choozin.managers.ProfileManager
 import com.choozin.ui.fragments.CreatePostFragment
 import com.choozin.ui.fragments.HomeFragment
 import com.choozin.ui.fragments.ProfileFragment
-import com.choozin.ui.fragments.SearchFragment
+import com.choozin.ui.fragments.RandomFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -38,17 +39,16 @@ class MainActivity : BaseActivity() {
                 }
                 R.id.navigation_profile -> {
                     val profileFragment = ProfileFragment()
-                    //val bundle = Bundle()
-                    //bundle.putSerializable("profileUser", AuthenticationManager.getInstance().currentUser)
-                    //profileFragment.arguments = bundle
+                    ProfileManager().instance.idCurrentProfileUser =
+                        AuthenticationManager.getInstance().currentUser._id
                     addFragment(profileFragment)
                     fragmentUIManager.setFragment(profileFragment as BaseFragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_search -> {
-                    val searchFragment = SearchFragment()
-                    addFragment(searchFragment)
-                    fragmentUIManager.setFragment(searchFragment as BaseFragment)
+                    val randomFragment = RandomFragment()
+                    addFragment(randomFragment)
+                    fragmentUIManager.setFragment(randomFragment as BaseFragment)
                     return@OnNavigationItemSelectedListener true
                 }
             }
@@ -70,6 +70,7 @@ class MainActivity : BaseActivity() {
 
         fragmentManager = supportFragmentManager
         addFragment(homeFragment)
+        fragmentUIManager.setFragment(homeFragment as BaseFragment)
     }
 
     private fun addFragment(fragment: Fragment) {

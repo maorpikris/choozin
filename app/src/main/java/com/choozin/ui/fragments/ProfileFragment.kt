@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.choozin.R
-import com.choozin.infra.adapters.ProfilePostsAdapter
+import com.choozin.infra.adapters.PostsAdapter
 import com.choozin.infra.base.BaseFragment
 import com.choozin.managers.AuthenticationManager
-import com.choozin.managers.PostsManager
+import com.choozin.managers.ProfileManager
 import com.choozin.models.PostItem
 import kotlinx.android.synthetic.main.fragment_profile.*
 import java.util.*
@@ -20,27 +20,31 @@ import java.util.*
 
 class ProfileFragment : BaseFragment() {
 
-    val authManager = AuthenticationManager.getInstance()
-    var isLoading: Boolean = false
-    var postsList: ArrayList<PostItem?> = arrayListOf()
-    lateinit var recyclerViewAdapter: ProfilePostsAdapter
+    private val profileManager: ProfileManager = ProfileManager().instance
+
+    private var postsList: ArrayList<PostItem?> = arrayListOf()
+    private lateinit var recyclerViewAdapter: PostsAdapter
     val bundle: Bundle? = this.arguments
-    //val profileId = bundle!!.getString("profileId")
+
 
     override fun updateUI() {
-
+        username.text = profileManager.currentProfileUser.username
+        description.text = profileManager.currentProfileUser.description
+        stars.text = profileManager.currentProfileUser.stars.toString()
+        Glide.with(activity!!.applicationContext)
+            .load(AuthenticationManager.buildGlideUrlWithAuth(profileManager.currentProfileUser.profileUrl))
+            .apply(RequestOptions.circleCropTransform()).into(profile_image)
         postsList.clear()
-        postsList.addAll(PostsManager.getInstance().profilePosts)
-
+        postsList.addAll(ProfileManager().instance.profilePosts)
         initAdapter()
-
     }
 
     private fun populateData() {
 
         Log.i("dab", AuthenticationManager.getInstance().currentUser._id)
-        PostsManager.getInstance()
-            .getProfilePosts(authManager.currentUser._id)
+
+        ProfileManager().instance
+            .getProfilePosts(profileManager.idCurrentProfileUser)
 
     }
 
@@ -49,25 +53,27 @@ class ProfileFragment : BaseFragment() {
             swipeContainer.isRefreshing = false
         }
         if (!this::recyclerViewAdapter.isInitialized) {
-            recyclerViewAdapter = ProfilePostsAdapter(postsList)
+            recyclerViewAdapter = PostsAdapter(postsList)
         }
         recyclerViewAdapter.notifyDataSetChanged()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        username.text = authManager.currentUser.username
-        description.text = authManager.currentUser.description
-        Glide.with(activity!!.applicationContext)
-            .load(AuthenticationManager.buildGlideUrlWithAuth(authManager.currentUser.profileUrl))
-            .apply(RequestOptions.circleCropTransform()).into(profile_image)
-
         profile_image.setOnClickListener {
 
         }
-        if (PostsManager.getInstance().profilePosts != null) {
-            postsList = PostsManager.getInstance().profilePosts
+        if (ProfileManager().instance.profilePosts != null && ProfileManager().instance.profilePosts.size > 0 && ProfileManager().instance.profilePosts[0].creator._id == ProfileManager().instance.idCurrentProfileUser) {
+            postsList = ProfileManager().instance.profilePosts
         }
-        recyclerViewAdapter = ProfilePostsAdapter(postsList)
+        if (ProfileManager().instance.currentProfileUser != null && ProfileManager().instance.currentProfileUser._id == ProfileManager().instance.idCurrentProfileUser) {
+            username.text = profileManager.currentProfileUser.username
+            description.text = profileManager.currentProfileUser.description
+            stars.text = profileManager.currentProfileUser.stars.toString()
+            Glide.with(activity!!.applicationContext)
+                .load(AuthenticationManager.buildGlideUrlWithAuth(profileManager.currentProfileUser.profileUrl))
+                .apply(RequestOptions.circleCropTransform()).into(profile_image)
+        }
+        recyclerViewAdapter = PostsAdapter(postsList)
         profilePostsRecyclerView.adapter = recyclerViewAdapter
         profilePostsRecyclerView.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)

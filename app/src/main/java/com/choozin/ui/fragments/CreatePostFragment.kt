@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.choozin.ChoozinApplication
 import com.choozin.R
 import com.choozin.infra.CropActivity
 import com.choozin.infra.base.BaseFragment
@@ -117,7 +118,8 @@ class CreatePostFragment : BaseFragment() {
     }
 
     override fun updateUI() {
-        Toast.makeText(context, "Post created", Toast.LENGTH_LONG)
+        //TODO loading dialog, when finished show toast
+        Toast.makeText(ChoozinApplication.getAppContext(), "Post created", Toast.LENGTH_LONG).show()
     }
 
 

@@ -20,6 +20,10 @@ public class UIManager extends BaseManager {
         foregroundActivity = new WeakReference<>(activity);
     }
 
+    public WeakReference<BaseActivity> getCurrentActivity() {
+        return foregroundActivity;
+    }
+
     public void dispatchUpdateUI() {
         if (foregroundActivity != null && foregroundActivity.get() != null) {
             foregroundActivity.get().updateUI();

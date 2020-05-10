@@ -6,6 +6,9 @@ import com.choozin.managers.ThreadsManager
 open class BaseFragment : Fragment() {
     open fun updateUI() {}
 
+    private var fragmentTag = ""
+
+
     fun postOnUI(runnable: Runnable) {
         ThreadsManager.getInstance().getDefaultHandler("main").post(runnable)
     }
