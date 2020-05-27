@@ -1,10 +1,9 @@
 package com.choozin.managers;
 
-import android.util.Log;
-
 import com.choozin.infra.base.BaseManager;
 import com.choozin.infra.base.FragmentUIManager;
 import com.choozin.models.PostItem;
+import com.choozin.ui.fragments.HomeFragment;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -20,7 +19,7 @@ import okhttp3.Response;
 
 public class HomeManager extends BaseManager {
     private static HomeManager instance = null;
-    public ArrayList<PostItem> homePosts;
+    public ArrayList<PostItem> homePosts = new ArrayList<>();
     private boolean pullToRefreshActive = false;
 
     public HomeManager getInstance() {
@@ -46,7 +45,7 @@ public class HomeManager extends BaseManager {
             pullToRefreshActive = false;
         }
 
-        //TODO why time is undefined in the server.
+
         Request request = createRequestBuilder("posts/home", "get", null).build()
                 .newBuilder().header("Authorization", AuthenticationManager.getInstance().currentUserToken)
                 .header("startTime", time)
@@ -67,11 +66,12 @@ public class HomeManager extends BaseManager {
                         JSONArray jsonArray = new JSONArray(response.body().string());
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject entry = jsonArray.getJSONObject(i);
-                            Log.v("shit", entry.toString());
                             postItemArrayList.add(gson.fromJson(entry.toString(), PostItem.class));
                         }
                         homePosts = postItemArrayList;
-                        FragmentUIManager.getInstance().dispatchUpdateUI();
+                        if (new FragmentUIManager().getInstance().getForegroundFragment().get() instanceof HomeFragment) {
+                            new FragmentUIManager().getInstance().dispatchUpdateUI();
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

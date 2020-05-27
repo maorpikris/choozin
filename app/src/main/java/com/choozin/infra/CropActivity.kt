@@ -20,15 +20,18 @@ class CropActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crop)
+        //   Setting te size of the crop area.
         cropView.of(intent.getParcelableExtra("image")).withAspect(3, 5).withOutputSize(650, 1000)
             .initialize(this)
 
     }
 
+    // method that crop the image and returning it back
     fun cropImage(view: View) {
         Log.v("a", "avdas ")
         val croppedBitmap = cropView.output
         if (croppedBitmap != null) {
+            // If image have been chosen. cropping it and setting its uri as an extra in the new intent.
             val returnIntent = Intent()
             val uri = getImageUriFromBitmap(this, croppedBitmap)
             returnIntent.putExtra("croppedImage", uri)
@@ -41,7 +44,8 @@ class CropActivity : AppCompatActivity() {
         }
     }
 
-    fun getImageUriFromBitmap(context: Context, bitmap: Bitmap): Uri {
+    private fun getImageUriFromBitmap(context: Context, bitmap: Bitmap): Uri {
+        // Saving the bitmap as an image in the local storage in order to get its uri.
         val bytes = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
         val path: String =

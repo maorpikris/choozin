@@ -1,7 +1,5 @@
 package com.choozin.managers;
 
-import android.util.Log;
-
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.choozin.infra.base.BaseManager;
@@ -39,6 +37,7 @@ public class AuthenticationManager extends BaseManager {
         return instance;
     }
 
+    // Creating glide requests with authentication header.
     public static GlideUrl buildGlideUrlWithAuth(String url) {
         return new GlideUrl(url, new LazyHeaders.Builder()
                 .addHeader("Authorization", AuthenticationManager.getInstance().currentUserToken)
@@ -46,16 +45,17 @@ public class AuthenticationManager extends BaseManager {
     }
 
     public void isLoggedIn() {
-
+        // checking if token exists in the shared prefs.
         if (getSharedPrefs().getString("token", null) != null) {
             currentUserToken = getSharedPrefs().getString("token", null);
+            // calling a request that should respond with whether the token in valid or not.
             Request request = createRequestBuilder("auth/userfromtoken", "get", null).build().newBuilder().header("Authorization", AuthenticationManager.getInstance().currentUserToken).build();
             Call call = okHttpClient.newCall(request);
             call.enqueue(new Callback() {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    // If not valid meaning there is no connection so setting the state to init.
                     loginScreenState = LoginScreenState.INIT;
-                    Log.e("e", e.getMessage());
                     UIManager.getInstance().dispatchUpdateUI();
                 }
 
@@ -63,6 +63,7 @@ public class AuthenticationManager extends BaseManager {
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                     if (response.isSuccessful()) {
                         try {
+                            // If response is successful setting the current user to the user from the response and setting the state to auth.
                             JSONObject jsonObject = new JSONObject(response.body().string());
                             currentUser = gson.fromJson(jsonObject.get("user").toString(), User.class);
                             loginScreenState = LoginScreenState.AUTH;
@@ -73,22 +74,22 @@ public class AuthenticationManager extends BaseManager {
                         }
                         UIManager.getInstance().dispatchUpdateUI();
                     }
-
                 }
             });
 
         } else {
-            Log.v("a", "a");
             loginScreenState = LoginScreenState.INIT;
             UIManager.getInstance().dispatchUpdateUI();
         }
 
     }
 
+    // Setting the state back to init.
     public void setBackToInit() {
         loginScreenState = LoginScreenState.INIT;
     }
 
+    // Validating the state of the fields.
     public void validateLoginFields(String email, String password) {
         if (email.equals("")) {
             emailState = new FieldValidationState(false, "Please enter an email");
@@ -106,27 +107,24 @@ public class AuthenticationManager extends BaseManager {
         }
     }
 
-    public void setToken(String token) {
+    // Saving the new token in the shared prefs.
+    private void setToken(String token) {
         getSharedPrefs().edit().putString("token", token).apply();
         currentUserToken = token;
     }
 
+    // Removing the token = Clearing the token from the shared prefs.
     public void clearToken() {
         getSharedPrefs().edit().putString("token", null).apply();
         currentUserToken = null;
     }
 
-    public enum LoginScreenState {
-        INIT,
-        LOADING,
-        AUTH,
-        FAILED_AUTH,
-        FAILED_CONNECT
-    }
-
+    // function the performs a login with calling to the server and receiving response.
     public void logInWithEmailAndPassword(String email, String password) {
+        // Setting the current state to loading and calling update ui
         loginScreenState = AuthenticationManager.LoginScreenState.LOADING;
         UIManager.getInstance().dispatchUpdateUI();
+        // Creating new request to the server with the user on the body of the request.
         User user = new User(email, password);
         String userJson = gson.toJson(user);
         RequestBody requestBody = RequestBody.create(JSON, userJson);
@@ -135,6 +133,7 @@ public class AuthenticationManager extends BaseManager {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                // if response failed updating the state to failed connection and update ui.
                 loginScreenState = LoginScreenState.FAILED_CONNECT;
                 UIManager.getInstance().dispatchUpdateUI();
             }
@@ -145,8 +144,11 @@ public class AuthenticationManager extends BaseManager {
                 if (response.isSuccessful()) {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
+                        // Setting the token to the new token from the response.
                         setToken(jsonObject.getString("token"));
+                        // Setting the current user to the user from the response
                         currentUser = gson.fromJson(jsonObject.get("user").toString(), User.class);
+                        // Setting the current state to auth and updating ui.
                         loginScreenState = LoginScreenState.AUTH;
                         UIManager.getInstance().dispatchUpdateUI();
                         return;
@@ -157,7 +159,8 @@ public class AuthenticationManager extends BaseManager {
                     }
 
                 }
-                Log.v("adas", response.message());
+
+                // If response has message meaning it failed setting the state to some failed state and updating ui.
                 if (response.message().equalsIgnoreCase("Service Unavailable")) {
                     loginScreenState = LoginScreenState.FAILED_CONNECT;
                 } else {
@@ -167,5 +170,14 @@ public class AuthenticationManager extends BaseManager {
                 UIManager.getInstance().dispatchUpdateUI();
             }
         });
+    }
+
+    // enums for the current state of the screen.
+    public enum LoginScreenState {
+        INIT,
+        LOADING,
+        AUTH,
+        FAILED_AUTH,
+        FAILED_CONNECT
     }
 }

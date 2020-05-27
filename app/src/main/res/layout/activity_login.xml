@@ -103,13 +103,13 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:scaleType="centerInside"
-        android:src="@drawable/choozin_logo"
+        android:src="@drawable/choozinlogo"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/choozin_logo" />
+        app:srcCompat="@drawable/choozinlogo" />
 
     <TextView
         android:id="@+id/textView"

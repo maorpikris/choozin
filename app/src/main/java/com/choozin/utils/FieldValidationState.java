@@ -1,5 +1,6 @@
 package com.choozin.utils;
 
+// The structure of a field validation.
 public class FieldValidationState {
     private boolean valid;
     private String message;

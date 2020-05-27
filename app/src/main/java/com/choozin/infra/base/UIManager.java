@@ -16,14 +16,17 @@ public class UIManager extends BaseManager {
         return instance;
     }
 
+    // Assigning the current running activity to a var.
     public void setActivity(BaseActivity activity) {
         foregroundActivity = new WeakReference<>(activity);
     }
 
+    // Getting the current running activity.
     public WeakReference<BaseActivity> getCurrentActivity() {
         return foregroundActivity;
     }
 
+    // Calling updateUI on the current running activity.
     public void dispatchUpdateUI() {
         if (foregroundActivity != null && foregroundActivity.get() != null) {
             foregroundActivity.get().updateUI();

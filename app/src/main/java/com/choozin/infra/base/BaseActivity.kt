@@ -9,7 +9,7 @@ import com.choozin.managers.ThreadsManager
 open class BaseActivity : AppCompatActivity() {
 
     open fun updateUI() {}
-
+    // Setting up functions that can be accessed by all the activities that exports BaseActivity
     fun postOnUI(runnable: Runnable) {
         ThreadsManager.getInstance().getDefaultHandler("main").post(runnable)
     }

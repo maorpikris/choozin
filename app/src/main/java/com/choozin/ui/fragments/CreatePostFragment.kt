@@ -119,7 +119,10 @@ class CreatePostFragment : BaseFragment() {
 
     override fun updateUI() {
         //TODO loading dialog, when finished show toast
+
         Toast.makeText(ChoozinApplication.getAppContext(), "Post created", Toast.LENGTH_LONG).show()
+
+
     }
 
 

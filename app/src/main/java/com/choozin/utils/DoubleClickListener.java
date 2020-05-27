@@ -29,5 +29,4 @@ public abstract class DoubleClickListener implements View.OnClickListener {
     }
 
     public abstract void onDoubleClick();
-
 }

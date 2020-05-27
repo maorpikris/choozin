@@ -3,6 +3,7 @@ package com.choozin.models;
 import java.io.Serializable;
 import java.util.List;
 
+// The user model, all the users that are coming from the server being transformed to this model.
 public class User implements Serializable {
 
     private String _id;
@@ -38,6 +39,13 @@ public class User implements Serializable {
         this.email = email;
         this.username = username;
         this.profileUrl = profileUrl;
+    }
+
+    public User() {
+        username = "";
+        description = "";
+        profileUrl = "https://res.cloudinary.com/maorpikris/image/upload/v1588375417/default/default_yldhtd.png";
+        stars = 0;
     }
 
     public List<String> getWait() {

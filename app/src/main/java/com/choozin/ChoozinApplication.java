@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import com.choozin.infra.base.BaseActivity;
 import com.choozin.infra.base.UIManager;
 
+// Setting the default behaviour of the activities in the app.
 public class ChoozinApplication extends Application implements Application.ActivityLifecycleCallbacks {
 
     private static Context context;
@@ -33,6 +34,7 @@ public class ChoozinApplication extends Application implements Application.Activ
     @Override
     public void onActivityResumed(@NonNull Activity activity) {
         if (activity instanceof BaseActivity) {
+            // Setting the current activity on the ui manager when activity resumed.
             UIManager.getInstance().setActivity((BaseActivity) activity);
         } else {
             Log.w(getClass().getSimpleName(), "Resumed non-base activity : " + activity.getClass().getSimpleName());
@@ -63,6 +65,7 @@ public class ChoozinApplication extends Application implements Application.Activ
     public void onCreate() {
         super.onCreate();
         registerActivityLifecycleCallbacks(this);
+        // Saving the application context in a static variable.
         ChoozinApplication.context = getApplicationContext();
     }
 }

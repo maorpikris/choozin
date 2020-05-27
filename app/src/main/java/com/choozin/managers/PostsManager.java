@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.choozin.infra.base.BaseManager;
 import com.choozin.infra.base.FragmentUIManager;
+import com.choozin.ui.fragments.CreatePostFragment;
 import com.choozin.utils.BitmapManipulation;
 
 import org.jetbrains.annotations.NotNull;
@@ -52,8 +53,10 @@ public class PostsManager extends BaseManager {
 
 
                 if (response.isSuccessful()) {
+                    if (new FragmentUIManager().getInstance().getForegroundFragment().get() instanceof CreatePostFragment) {
+                        new FragmentUIManager().getInstance().dispatchUpdateUI();
+                    }
 
-                    FragmentUIManager.getInstance().dispatchUpdateUI();
                 }
 
 
@@ -70,7 +73,7 @@ public class PostsManager extends BaseManager {
             }
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    FragmentUIManager.getInstance().dispatchUpdateUI();
+                new FragmentUIManager().getInstance().dispatchUpdateUI();
             }
         });
     }

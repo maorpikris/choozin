@@ -2,6 +2,7 @@ package com.choozin.models;
 
 import java.util.List;
 
+// The post model, all the posts that are coming from the server being transformed to this model.
 public class PostItem {
     private String title;
     private String rImage;

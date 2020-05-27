@@ -21,7 +21,9 @@ public class BaseManager {
 
     public BaseManager() {
     }
+    // Setting up fuctions that can be accessed by all the manager that exports BaseManager
 
+    //Creating a request builder based on the given params.
     public static Request.Builder createRequestBuilder(String url, String o, RequestBody requestBody) {
         switch (o) {
             case "post":
@@ -37,10 +39,12 @@ public class BaseManager {
         }
     }
 
+    // Getting the shared Prefrences
     protected SharedPreferences getSharedPrefs() {
         return ChoozinApplication.getAppContext().getSharedPreferences("main", 0);
     }
 
+    // Validating email
     protected boolean isEmailValid(String email) {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }

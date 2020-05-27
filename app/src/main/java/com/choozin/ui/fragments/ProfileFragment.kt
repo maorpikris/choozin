@@ -21,18 +21,17 @@ import java.util.*
 class ProfileFragment : BaseFragment() {
 
     private val profileManager: ProfileManager = ProfileManager().instance
-
     private var postsList: ArrayList<PostItem?> = arrayListOf()
     private lateinit var recyclerViewAdapter: PostsAdapter
     val bundle: Bundle? = this.arguments
 
 
     override fun updateUI() {
-        username.text = profileManager.currentProfileUser.username
-        description.text = profileManager.currentProfileUser.description
-        stars.text = profileManager.currentProfileUser.stars.toString()
+        username.text = ProfileManager.currentProfileUser.username
+        description.text = ProfileManager.currentProfileUser.description
+        stars.text = ProfileManager.currentProfileUser.stars.toString()
         Glide.with(activity!!.applicationContext)
-            .load(AuthenticationManager.buildGlideUrlWithAuth(profileManager.currentProfileUser.profileUrl))
+            .load(AuthenticationManager.buildGlideUrlWithAuth(ProfileManager.currentProfileUser.profileUrl))
             .apply(RequestOptions.circleCropTransform()).into(profile_image)
         postsList.clear()
         postsList.addAll(ProfileManager().instance.profilePosts)
@@ -65,12 +64,12 @@ class ProfileFragment : BaseFragment() {
         if (ProfileManager().instance.profilePosts != null && ProfileManager().instance.profilePosts.size > 0 && ProfileManager().instance.profilePosts[0].creator._id == ProfileManager().instance.idCurrentProfileUser) {
             postsList = ProfileManager().instance.profilePosts
         }
-        if (ProfileManager().instance.currentProfileUser != null && ProfileManager().instance.currentProfileUser._id == ProfileManager().instance.idCurrentProfileUser) {
-            username.text = profileManager.currentProfileUser.username
-            description.text = profileManager.currentProfileUser.description
-            stars.text = profileManager.currentProfileUser.stars.toString()
+        if (ProfileManager.currentProfileUser != null && ProfileManager.currentProfileUser._id == ProfileManager().instance.idCurrentProfileUser) {
+            username.text = ProfileManager.currentProfileUser.username
+            description.text = ProfileManager.currentProfileUser.description
+            stars.text = ProfileManager.currentProfileUser.stars.toString()
             Glide.with(activity!!.applicationContext)
-                .load(AuthenticationManager.buildGlideUrlWithAuth(profileManager.currentProfileUser.profileUrl))
+                .load(AuthenticationManager.buildGlideUrlWithAuth(ProfileManager.currentProfileUser.profileUrl))
                 .apply(RequestOptions.circleCropTransform()).into(profile_image)
         }
         recyclerViewAdapter = PostsAdapter(postsList)

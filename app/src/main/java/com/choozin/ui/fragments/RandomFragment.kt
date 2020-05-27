@@ -5,15 +5,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.choozin.R
 import com.choozin.infra.adapters.PostsAdapter
 import com.choozin.infra.base.BaseFragment
+import com.choozin.infra.base.FragmentUIManager
 import com.choozin.managers.ExploreManager
 import com.choozin.models.PostItem
 import kotlinx.android.synthetic.main.fragment_random.*
 import java.util.*
+
 
 class RandomFragment : BaseFragment() {
 
@@ -25,11 +28,13 @@ class RandomFragment : BaseFragment() {
     override fun updateUI() {
         postsList.clear()
         postsList.addAll(manager.explorePosts)
+
         initAdapter()
     }
 
     private fun populateData() {
         Log.v("dav", "its running yo")
+        manager.allowInteraction = false
         manager.getExplorePosts()
     }
 
@@ -41,13 +46,14 @@ class RandomFragment : BaseFragment() {
             recyclerViewAdapter = PostsAdapter(manager.explorePosts)
         }
         recyclerViewAdapter.notifyDataSetChanged()
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         if (manager.explorePosts != null) {
             Log.v("work", "work")
-            postsList = manager.explorePosts
+            postsList.addAll(manager.explorePosts)
         }
         recyclerViewAdapter = PostsAdapter(postsList)
         randomPosts.adapter = recyclerViewAdapter
@@ -56,6 +62,14 @@ class RandomFragment : BaseFragment() {
         swipeContainer.setOnRefreshListener {
             manager.refresh = true
             populateData()
+        }
+        searchField.setOnFocusChangeListener { view: View, b: Boolean ->
+            val searchFragment = SearchFragment()
+            FragmentUIManager().instance.setFragment(searchFragment as BaseFragment)
+            val fragmentTransaction: FragmentTransaction =
+                FragmentUIManager().instance.fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.fragment_container, searchFragment)
+            fragmentTransaction.commit()
         }
 
         initScrollListener()
@@ -76,6 +90,7 @@ class RandomFragment : BaseFragment() {
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == manager.explorePosts.size - 1) {
                         //bottom of list!
                         Log.v("Dab", "load more")
+                        manager.loadMore = true
                         populateData()
                         isLoading = true
                     }

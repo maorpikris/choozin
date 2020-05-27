@@ -30,6 +30,8 @@ class HomeFragment : BaseFragment() {
         postsList.clear()
         postsList.addAll(manager.homePosts)
         initAdapter()
+
+
     }
 
     private fun populateData() {

@@ -7,7 +7,7 @@ open class BaseFragment : Fragment() {
     open fun updateUI() {}
 
     private var fragmentTag = ""
-
+    // Setting up functions that can be accessed by all the fragments that exports BaseFragment
 
     fun postOnUI(runnable: Runnable) {
         ThreadsManager.getInstance().getDefaultHandler("main").post(runnable)

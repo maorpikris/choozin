@@ -2,7 +2,6 @@ package com.choozin.infra
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.choozin.R
 import com.choozin.infra.base.BaseActivity
@@ -20,10 +19,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
 
-    private val fragmentUIManager: FragmentUIManager = FragmentUIManager.getInstance()
+    private val fragmentUIManager: FragmentUIManager = FragmentUIManager().instance
     private val homeFragment = HomeFragment()
 
     private val mOnNavigationItemSelectedListener =
+        // opening each fragment according to the selected item in the bottom navigation.
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
@@ -38,6 +38,7 @@ class MainActivity : BaseActivity() {
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_profile -> {
+                    // setting the profile id to the current user id.
                     val profileFragment = ProfileFragment()
                     ProfileManager().instance.idCurrentProfileUser =
                         AuthenticationManager.getInstance().currentUser._id
@@ -54,30 +55,35 @@ class MainActivity : BaseActivity() {
             }
             false
         }
-    private lateinit var fragmentManager: FragmentManager
+
 
     override fun onStart() {
         super.onStart()
+        // Setting the login state back to init.
         AuthenticationManager.getInstance().setBackToInit()
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Setting the top bar and its title.
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         setSupportActionBar(toolbar as androidx.appcompat.widget.Toolbar)
         supportActionBar?.title = "Choozin"
 
-        fragmentManager = supportFragmentManager
+        // Setting the fragment manager on the fragment ui manager so it can be accessed from other places.
+        fragmentUIManager.fragmentManager = supportFragmentManager
+        // Adding the home fragment as the first one.
         addFragment(homeFragment)
+        // Setting the current fragment on the fragment ui manager.
         fragmentUIManager.setFragment(homeFragment as BaseFragment)
     }
 
     private fun addFragment(fragment: Fragment) {
-        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_container, fragment)
+        // Replacing the current fragment with the new one.
+        val fragmentTransaction: FragmentTransaction =
+            fragmentUIManager.fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragment_container, fragment, "A")
         fragmentTransaction.commit()
     }
-
-
 }

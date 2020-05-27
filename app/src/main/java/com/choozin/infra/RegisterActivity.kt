@@ -23,6 +23,7 @@ class RegisterActivity : BaseActivity() {
 
     fun registerButtonClicked(view: View) {
         if (checkValidation()) {
+            // Calling the register method on the registermanager on the second thread.
             postOnSecondary(Runnable {
                 registerManager.signUp(
                     emailField.text.toString(),
@@ -35,6 +36,7 @@ class RegisterActivity : BaseActivity() {
     }
 
     override fun updateUI() {
+        // Updating the ui according to the state on the registerManager.
         postOnUI(Runnable {
             when (registerManager.registerState) {
                 RegisterManager.RegisterState.INIT -> {
@@ -61,6 +63,7 @@ class RegisterActivity : BaseActivity() {
         })
     }
 
+    // Checking the validation of the fields.
     private fun checkValidation(): Boolean {
         var result = true
         registerManager.validateFields(

@@ -86,7 +86,6 @@
                 app:layout_constraintEnd_toEndOf="@+id/description"
                 app:layout_constraintTop_toTopOf="@+id/stars" />
 
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/profilePostsRecyclerView"
                 android:layout_width="match_parent"
@@ -99,5 +98,6 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

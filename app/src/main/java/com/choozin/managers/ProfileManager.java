@@ -6,6 +6,7 @@ import com.choozin.infra.base.BaseManager;
 import com.choozin.infra.base.FragmentUIManager;
 import com.choozin.models.PostItem;
 import com.choozin.models.User;
+import com.choozin.ui.fragments.ProfileFragment;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -21,8 +22,8 @@ import okhttp3.Response;
 
 public class ProfileManager extends BaseManager {
     private static ProfileManager instance = null;
-    public ArrayList<PostItem> profilePosts;
-    public User currentProfileUser;
+    public static User currentProfileUser = new User();
+    public ArrayList<PostItem> profilePosts = new ArrayList<>();
     public String idCurrentProfileUser;
 
 
@@ -59,7 +60,9 @@ public class ProfileManager extends BaseManager {
                             postItemArrayList.add(gson.fromJson(entry.toString(), PostItem.class));
                         }
                         profilePosts = postItemArrayList;
-                        FragmentUIManager.getInstance().dispatchUpdateUI();
+                        if (new FragmentUIManager().getInstance().getForegroundFragment().get() instanceof ProfileFragment) {
+                            new FragmentUIManager().getInstance().dispatchUpdateUI();
+                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();
