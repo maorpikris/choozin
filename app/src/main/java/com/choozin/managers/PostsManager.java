@@ -33,13 +33,15 @@ public class PostsManager extends BaseManager {
         return instance;
     }
 
-
+    // Creating posts and uploading them to the server
     public void createPost(Bitmap right, Bitmap left, String title) {
         RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
                 .addFormDataPart("title", title)
+                // Sending the images as base64 string.
                 .addFormDataPart("images", "r.jpg", RequestBody.create(MediaType.parse("image/*jpg"), BitmapManipulation.BitMapToString(right)))
                 .addFormDataPart("images", "l.jpg", RequestBody.create(MediaType.parse("image/*jpg"), BitmapManipulation.BitMapToString(left))).build();
 
+        // Calling the createPost from the server.
         Request request = createRequestBuilder("posts", "post", requestBody).build().newBuilder().header("Authorization", AuthenticationManager.getInstance().currentUserToken).build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -51,7 +53,7 @@ public class PostsManager extends BaseManager {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
 
-
+                // if the current fragment is createpostfragment updating the UI.
                 if (response.isSuccessful()) {
                     if (new FragmentUIManager().getInstance().getForegroundFragment().get() instanceof CreatePostFragment) {
                         new FragmentUIManager().getInstance().dispatchUpdateUI();
@@ -64,7 +66,9 @@ public class PostsManager extends BaseManager {
         });
     }
 
+    // Removing post by id.
     public void removePost(String postId) {
+        // calling the removepost from the server.
         Request request = createRequestBuilder("posts/" + postId, "delete", null).build().newBuilder().header("Authorization", AuthenticationManager.getInstance().currentUserToken).build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -73,11 +77,13 @@ public class PostsManager extends BaseManager {
             }
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                // updating the ui.
                 new FragmentUIManager().getInstance().dispatchUpdateUI();
             }
         });
     }
 
+    // Sending an action performed by the user to the server.
     public void postsActions(String postId, String action) {
         final String jsonAction = "{\"action\":\"" + action + "\"}";
         final RequestBody body = RequestBody.create(
@@ -87,16 +93,13 @@ public class PostsManager extends BaseManager {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Log.e("e", e.getMessage());
+
             }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                Log.v("Dab", "daf");
 
-                if (response.isSuccessful()) {
-                    // TODO think what to do.
-                }
+
             }
         });
     }

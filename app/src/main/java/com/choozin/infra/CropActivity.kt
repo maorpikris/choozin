@@ -28,7 +28,6 @@ class CropActivity : AppCompatActivity() {
 
     // method that crop the image and returning it back
     fun cropImage(view: View) {
-        Log.v("a", "avdas ")
         val croppedBitmap = cropView.output
         if (croppedBitmap != null) {
             // If image have been chosen. cropping it and setting its uri as an extra in the new intent.

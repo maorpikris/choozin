@@ -34,36 +34,38 @@ public class ProfileManager extends BaseManager {
         return instance;
     }
 
+    // Getting the profile posts
     public void getProfilePosts(String id) {
+        // Asking the server for the profile posts of a user.
         Request request = createRequestBuilder("posts/profile/" + idCurrentProfileUser, "get", null).build().newBuilder().header("Authorization", AuthenticationManager.getInstance().currentUserToken).build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Log.e("e", e.getMessage());
+                e.printStackTrace();
             }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if (response.isSuccessful()) {
                     try {
+                        // If response if successful turning all the json to PostItem.
                         ArrayList<PostItem> postItemArrayList = new ArrayList<>();
                         JSONObject root = new JSONObject(response.body().string());
-                        Log.v("a", root.toString());
                         JSONArray jsonArray = root.getJSONArray("posts");
+                        // setting the currentprofileuser to the creator of the post.
                         currentProfileUser = gson.fromJson(root.getJSONObject("creator").toString(), User.class);
-                        Log.v("Dab", currentProfileUser.get_id());
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject entry = jsonArray.getJSONObject(i);
-                            Log.v("shit", entry.toString());
                             postItemArrayList.add(gson.fromJson(entry.toString(), PostItem.class));
                         }
+                        // Setting the old post list to the new one that contains the json data.
                         profilePosts = postItemArrayList;
+                        // Updating UI if the current fragment is profile fragment.
                         if (new FragmentUIManager().getInstance().getForegroundFragment().get() instanceof ProfileFragment) {
                             new FragmentUIManager().getInstance().dispatchUpdateUI();
                         }
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

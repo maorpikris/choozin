@@ -26,18 +26,18 @@ class RandomFragment : BaseFragment() {
     lateinit var recyclerViewAdapter: PostsAdapter
 
     override fun updateUI() {
+        // on update ui clearing the old list and adding the items from the manager list.
         postsList.clear()
         postsList.addAll(manager.explorePosts)
-
         initAdapter()
     }
 
+    // Asking the manager to get the posts from the server.
     private fun populateData() {
-        Log.v("dav", "its running yo")
-        manager.allowInteraction = false
         manager.getExplorePosts()
     }
 
+    // initializing the adapter and notifying about the change.
     private fun initAdapter() {
         if (swipeContainer != null) {
             swipeContainer.isRefreshing = false
@@ -52,9 +52,9 @@ class RandomFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         if (manager.explorePosts != null) {
-            Log.v("work", "work")
             postsList.addAll(manager.explorePosts)
         }
+        // initializing all the critic things
         recyclerViewAdapter = PostsAdapter(postsList)
         randomPosts.adapter = recyclerViewAdapter
         randomPosts.layoutManager =
@@ -63,6 +63,7 @@ class RandomFragment : BaseFragment() {
             manager.refresh = true
             populateData()
         }
+        // when the search field is focused opening the search fragment.
         searchField.setOnFocusChangeListener { view: View, b: Boolean ->
             val searchFragment = SearchFragment()
             FragmentUIManager().instance.setFragment(searchFragment as BaseFragment)
@@ -80,7 +81,6 @@ class RandomFragment : BaseFragment() {
 
     private fun initScrollListener() {
         randomPosts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
@@ -88,8 +88,7 @@ class RandomFragment : BaseFragment() {
 
                 if (!isLoading) {
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == manager.explorePosts.size - 1) {
-                        //bottom of list!
-                        Log.v("Dab", "load more")
+                        //calling load more when in bottom of the list.
                         manager.loadMore = true
                         populateData()
                         isLoading = true

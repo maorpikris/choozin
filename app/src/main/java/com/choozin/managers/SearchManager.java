@@ -30,8 +30,9 @@ public class SearchManager extends BaseManager {
         return instance;
     }
 
+    // Searching users by word
     public void getSearchUsers(String searchWord) {
-        // Change the way of sending the word from header to params
+        // Asking the server for a users that contains the word in the search field.
         Request request = createRequestBuilder("users/search", "get", null).build()
                 .newBuilder().header("Authorization", AuthenticationManager.getInstance().currentUserToken)
                 .header("searchWord", searchWord)
@@ -46,6 +47,7 @@ public class SearchManager extends BaseManager {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if (response.isSuccessful()) {
+                    // Turning all the json data to User model.
                     try {
                         ArrayList<User> usersArrayList = new ArrayList<>();
                         JSONArray jsonArray = new JSONArray(response.body().string());
@@ -53,7 +55,9 @@ public class SearchManager extends BaseManager {
                             JSONObject entry = jsonArray.getJSONObject(i);
                             usersArrayList.add(gson.fromJson(entry.toString(), User.class));
                         }
+                        // Setting the users list to the new list that contains the json data.
                         users = usersArrayList;
+                        // Updating ui if the current fragment is the search fragment.
                         if (new FragmentUIManager().getInstance().getForegroundFragment().get() instanceof SearchFragment) {
                             new FragmentUIManager().getInstance().dispatchUpdateUI();
                         }

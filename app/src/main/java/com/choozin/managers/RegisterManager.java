@@ -33,12 +33,14 @@ public class RegisterManager extends BaseManager {
         return instance;
     }
 
-    public void signUp(String email, String password, String username, RegisterActivity activity) {
+    // Sign up a user to the app.
+    public void signUp(String email, String password, String username) {
         registerState = RegisterState.LOADING;
         UIManager.getInstance().dispatchUpdateUI();
         User user = new User(email, password, username);
         String userJson = gson.toJson(user);
         RequestBody requestBody = RequestBody.create(JSON, userJson);
+        // Sending a request to signup to the server.
         Request request = createRequestBuilder("auth/signup", "put", requestBody).build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -51,14 +53,15 @@ public class RegisterManager extends BaseManager {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                // If user created setting the current state to valid and updating ui.
                 if (response.body().string().contains("User created")) {
                     registerState = RegisterState.VALID;
                     UIManager.getInstance().dispatchUpdateUI();
                     return;
                 }
+                // else setting the state to unvalid.
                 registerState = RegisterState.UNVALID;
                 UIManager.getInstance().dispatchUpdateUI();
-                //TODO: Check whether email, username or both are taken.
             }
         });
     }
@@ -68,6 +71,8 @@ public class RegisterManager extends BaseManager {
         UIManager.getInstance().dispatchUpdateUI();
     }
 
+
+    // Validating the fields of the register activity.
     public void validateFields(String email, String password, String username) {
         if (email.equals("")) {
             emailState = new FieldValidationState(false, "Please enter an email");
@@ -90,6 +95,7 @@ public class RegisterManager extends BaseManager {
         }
     }
 
+    // Enum of register state.
     public enum RegisterState {
         INIT,
         LOADING,

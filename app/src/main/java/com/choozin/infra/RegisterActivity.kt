@@ -28,8 +28,7 @@ class RegisterActivity : BaseActivity() {
                 registerManager.signUp(
                     emailField.text.toString(),
                     passwordField.text.toString(),
-                    usernameField.text.toString(),
-                    this
+                    usernameField.text.toString()
                 )
             })
         }

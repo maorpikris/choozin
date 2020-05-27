@@ -1,7 +1,6 @@
 package com.choozin.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,10 +22,8 @@ class HomeFragment : BaseFragment() {
     var postsList: ArrayList<PostItem?> = arrayListOf()
     lateinit var recyclerViewAdapter: PostsAdapter
 
-
-    val TAG: String = "Home"
     override fun updateUI() {
-
+        // on update ui clearing the old list and adding the items from the manager list.
         postsList.clear()
         postsList.addAll(manager.homePosts)
         initAdapter()
@@ -34,11 +31,12 @@ class HomeFragment : BaseFragment() {
 
     }
 
+    // Asking the manager to get the posts from the server.
     private fun populateData() {
-        Log.v("dav", "its running yo")
         manager.getHomePosts()
     }
 
+    // initializing the adapter and notifying about the change.
     private fun initAdapter() {
         if (swipeContainer != null) {
             swipeContainer.isRefreshing = false
@@ -50,7 +48,7 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        // initializing all the critic things
         if (manager.homePosts != null && manager.homePosts.size > 0) {
             postsList = manager.homePosts
         }
@@ -79,8 +77,7 @@ class HomeFragment : BaseFragment() {
 
                 if (!isLoading) {
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == manager.homePosts.size - 1) {
-                        //bottom of list!
-                        Log.v("Dab", "load more")
+                        //calling load more when in bottom of the list.
                         loadMore()
                         isLoading = true
                     }
@@ -99,8 +96,8 @@ class HomeFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // calling populate data and inflating the fragment.
         populateData()
-        Log.v("dav", "its running yo")
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 }

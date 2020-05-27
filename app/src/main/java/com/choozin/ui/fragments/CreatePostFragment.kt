@@ -40,6 +40,7 @@ class CreatePostFragment : BaseFragment() {
 
     override fun onStart() {
         super.onStart()
+        // Setting a watcher on the title field.
         title_create_post.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
 
@@ -52,6 +53,7 @@ class CreatePostFragment : BaseFragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Setting the preview title to the text on the field.
                 if (s.isNullOrEmpty()) {
                     include.post_title.text = "Text will be showen here"
                     return
@@ -71,6 +73,7 @@ class CreatePostFragment : BaseFragment() {
         }
     }
 
+    // On create post asking the manager to send a request to the server.
     fun createPost() {
         val drawableRight = post_rimage.drawable as Drawable
         val drawableLeft = post_limage.drawable as Drawable
@@ -81,12 +84,14 @@ class CreatePostFragment : BaseFragment() {
             .createPost(bitmapRight, bitmapLeft, title_create_post.text.toString())
     }
 
+    // Opening the cropimage activity with wait for result.
     fun cropImage(side: Int, uri: Uri) {
         val intent = Intent(context, CropActivity::class.java)
         intent.putExtra("image", uri)
         startActivityForResult(intent, side)
     }
 
+    // Opening the gallery for result.
     fun pickImage(side: Int) {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
@@ -99,7 +104,7 @@ class CreatePostFragment : BaseFragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
+        // checking the result and performing actions according to it.
         if (resultCode != Activity.RESULT_OK) {
             return
         }
@@ -118,8 +123,7 @@ class CreatePostFragment : BaseFragment() {
     }
 
     override fun updateUI() {
-        //TODO loading dialog, when finished show toast
-
+        // show post created toast.
         Toast.makeText(ChoozinApplication.getAppContext(), "Post created", Toast.LENGTH_LONG).show()
 
 

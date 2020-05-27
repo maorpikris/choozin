@@ -27,26 +27,27 @@ class ProfileFragment : BaseFragment() {
 
 
     override fun updateUI() {
+        // Updating the ui of the top part of the screen.
         username.text = ProfileManager.currentProfileUser.username
         description.text = ProfileManager.currentProfileUser.description
         stars.text = ProfileManager.currentProfileUser.stars.toString()
         Glide.with(activity!!.applicationContext)
             .load(AuthenticationManager.buildGlideUrlWithAuth(ProfileManager.currentProfileUser.profileUrl))
             .apply(RequestOptions.circleCropTransform()).into(profile_image)
+        // on update ui clearing the old list and adding the items from the manager list.
         postsList.clear()
         postsList.addAll(ProfileManager().instance.profilePosts)
         initAdapter()
     }
 
+    // Asking the manager to get the posts from the server.
     private fun populateData() {
-
-        Log.i("dab", AuthenticationManager.getInstance().currentUser._id)
-
         ProfileManager().instance
             .getProfilePosts(profileManager.idCurrentProfileUser)
 
     }
 
+    // initializing the adapter and notifying about the change.
     private fun initAdapter() {
         if (swipeContainer != null) {
             swipeContainer.isRefreshing = false
@@ -58,9 +59,7 @@ class ProfileFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        profile_image.setOnClickListener {
-
-        }
+        // initializing all the critic things and updating ui if possible
         if (ProfileManager().instance.profilePosts != null && ProfileManager().instance.profilePosts.size > 0 && ProfileManager().instance.profilePosts[0].creator._id == ProfileManager().instance.idCurrentProfileUser) {
             postsList = ProfileManager().instance.profilePosts
         }
@@ -79,7 +78,6 @@ class ProfileFragment : BaseFragment() {
         swipeContainer.setOnRefreshListener {
             populateData()
         }
-
         super.onViewCreated(view, savedInstanceState)
     }
 
